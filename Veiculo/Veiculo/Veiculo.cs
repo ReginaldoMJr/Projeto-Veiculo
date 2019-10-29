@@ -59,6 +59,37 @@ namespace Veiculo {
                 Autonomia = uint.Parse(Console.ReadLine());
             }
         }
+        public void Abastecer(Veiculo veiculo) {
+            uint abastecer = 3000;
+            if (TipoCombustivel == "Flex") {
+
+            }
+
+            if (TipoCombustivel == "Gasolina") {
+                do {
+                    uint.TryParse(Console.ReadLine(), out abastecer);
+                    if (QtdGasolina + abastecer <= CapacidadeTanque)
+                        QtdGasolina += abastecer;
+                    else {
+                        Console.WriteLine("Voce não pode abastecer mais que a quantidade do tanque");
+                        abastecer = 3000;
+                    }
+                }
+                while (abastecer == 3000);
+            }
+            if (TipoCombustivel == "Alcool") {
+                do {
+                    uint.TryParse(Console.ReadLine(), out abastecer);
+                    if (QtdAlcool + abastecer <= CapacidadeTanque)
+                        QtdAlcool += abastecer;
+                    else {
+                        Console.WriteLine("Voce não pode abastecer mais que a quantidade do tanque");
+                        abastecer = 3000;
+                    }
+                }
+                while (abastecer == 3000);
+            }
+        }
         public override string ToString() {
             return $"Marca: {Marca} -- Modelo: {Modelo} -- Placa: {Placa} -- Ano: {Ano} -- Velocidade Maxima: {VelocidadeMax}"
                 + $"\nCapacidade do tanque: {CapacidadeTanque} -- Tipo de Combustivel: {TipoCombustivel} -- Autonomia: {Autonomia}";

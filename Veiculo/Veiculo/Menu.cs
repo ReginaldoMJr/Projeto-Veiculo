@@ -61,7 +61,7 @@ namespace Veiculo {
                         }
                         break;
                     case 3:
-
+                        veiculo.Abastecer(veiculo);
                         break;
                     case 4:
                         Console.WriteLine(veiculo);
