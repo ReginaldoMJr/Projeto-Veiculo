@@ -3,7 +3,9 @@
 namespace Veiculo {
     class Program {
         static void Main(string[] args) {
-            Console.WriteLine("Hello World!");
+            Veiculo veiculo = null;
+            Menu menu = new Menu();
+            menu.menu(veiculo);
         }
     }
 }
