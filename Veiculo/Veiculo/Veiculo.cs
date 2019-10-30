@@ -94,6 +94,7 @@ namespace Veiculo {
 
             if (TipoCombustivel == "Gasolina") {
                 do {
+                    Console.WriteLine($"quantidade de combustivel: {QtdGasolina}/{CapacidadeTanque}");
                     Console.WriteLine("Quantos litros deseja abastecer?");
                     uint.TryParse(Console.ReadLine(), out abastecer);
                     if (QtdGasolina + abastecer <= CapacidadeTanque)
@@ -107,6 +108,7 @@ namespace Veiculo {
             }
             if (TipoCombustivel == "Alcool") {
                 do {
+                    Console.WriteLine($"quantidade de combustivel: {QtdAlcool}/{CapacidadeTanque}");
                     Console.WriteLine("Quantos litros deseja abastecer?");
                     uint.TryParse(Console.ReadLine(), out abastecer);
                     if (QtdAlcool + abastecer <= CapacidadeTanque)

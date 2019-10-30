@@ -25,67 +25,46 @@ namespace Veiculo {
                         }
                         else {
                             double viagem;
-                            do {
-                                Console.Write("Digite o tamanho da viagem: ");
-                                double.TryParse(Console.ReadLine(), out viagem);
-                                for (double km = 0; km <= viagem; km++) {
+                            Console.Write("Digite o tamanho da viagem: ");
+                            double.TryParse(Console.ReadLine(), out viagem);
 
-                                    if (veiculo.TipoCombustivel == "Flex") {
-                                        while (veiculo.QtdAlcool > 0) {
-                                            if (km % veiculo.AutonomiaA == 0) {
-                                                veiculo.QtdAlcool--;
-                                                viagem -= km;
-                                                km = -1;
-                                            }
-                                            if (viagem < veiculo.AutonomiaA) {
-                                                veiculo.QtdAlcool -= viagem / veiculo.AutonomiaA;
-                                            }
-                                        }
-                                        while (veiculo.QtdGasolina > 0) {
-                                            if (km % veiculo.AutonomiaG == 0) {
-                                                veiculo.QtdGasolina--;
-                                            }
-                                        }
-                                        if (veiculo.QtdGasolina == 0 && veiculo.QtdAlcool == 0) {
-                                            Console.WriteLine("Acabou o combustivel, abastecer");
-                                            veiculo.Abastecer();
-                                        }
+                            if (veiculo.TipoCombustivel == "Flex") {
+
+                            }
+                            if (veiculo.TipoCombustivel == "Alcool") {
+                                double QtdLitrosV = viagem / veiculo.Autonomia;
+                                do {
+                                    if (veiculo.QtdAlcool < QtdLitrosV) {
+                                        QtdLitrosV -= veiculo.QtdAlcool;
+                                        veiculo.QtdAlcool = 0;
                                     }
-                                    else if (veiculo.TipoCombustivel == "Alcool") {
-                                        if (km % veiculo.Autonomia == 0) {
-                                            if (veiculo.QtdAlcool > 0) {
-                                                veiculo.QtdAlcool--;
-                                                viagem -= km;
-                                                km = -1;
-                                            }
-                                            if (viagem < veiculo.Autonomia) {
-                                                veiculo.QtdAlcool -= viagem / veiculo.Autonomia;
-                                            }
-                                            if (veiculo.QtdAlcool == 0) {
-                                                Console.WriteLine("Acabou o combustivel, abastecer");
-                                                veiculo.Abastecer();
-                                            }
-                                        }
+                                    if (veiculo.QtdAlcool >= QtdLitrosV) {
+                                        veiculo.QtdAlcool -= QtdLitrosV;
+                                        QtdLitrosV -= veiculo.QtdAlcool;
                                     }
-                                    else if (veiculo.TipoCombustivel == "Gasolina") {
-                                        if (km % veiculo.Autonomia == 0) {
-                                            if (veiculo.QtdGasolina > 0) {
-                                                veiculo.QtdGasolina--;
-                                                viagem -= km;
-                                                km = -1;
-                                            }
-                                            if (viagem < veiculo.Autonomia) {
-                                                veiculo.QtdGasolina -= viagem / veiculo.Autonomia;
-                                            }
-                                            if (veiculo.QtdGasolina == 0) {
-                                                Console.WriteLine("Acabou o combustivel, abastecer");
-                                                veiculo.Abastecer();
-                                            }
-                                        }
+                                    if (veiculo.QtdAlcool == 0) veiculo.Abastecer();
+                                }
+                                while (QtdLitrosV > 0);
+                            }
+                            if (veiculo.TipoCombustivel == "Gasolina") {
+                                double QtdLitrosV = viagem / veiculo.Autonomia;
+                                do {
+                                    if (veiculo.QtdGasolina < QtdLitrosV) {
+                                        QtdLitrosV -= veiculo.QtdGasolina;
+                                        veiculo.QtdGasolina = 0;
                                     }
+                                    if (veiculo.QtdGasolina >= QtdLitrosV) {
+                                        veiculo.QtdGasolina -= QtdLitrosV;
+                                        QtdLitrosV -= veiculo.QtdGasolina;
+                                    }
+                                    if (veiculo.QtdGasolina == 0) veiculo.Abastecer();
+                                }
+                                while (QtdLitrosV > 0);
+                                if (QtdLitrosV == 0) {
+                                    Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
+                                    Console.ReadLine();
                                 }
                             }
-                            while (viagem == 0);
                         }
                         break;
                     case 3:
