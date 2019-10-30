@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Veiculo {
     class Veiculo {
@@ -59,14 +57,44 @@ namespace Veiculo {
                 Autonomia = uint.Parse(Console.ReadLine());
             }
         }
-        public void Abastecer(Veiculo veiculo) {
-            uint abastecer = 3000;
+        public void Abastecer() {
+            uint abastecer;
             if (TipoCombustivel == "Flex") {
-
+                int num;
+                Console.WriteLine("[1] Gasolina");
+                Console.WriteLine("[2] Alcool");
+                int.TryParse(Console.ReadLine(), out num);
+                if (num == 1) {
+                    do {
+                        Console.WriteLine("Quantos litros deseja abastecer?");
+                        uint.TryParse(Console.ReadLine(), out abastecer);
+                        if (QtdGasolina + abastecer <= CapacidadeTanque)
+                            QtdGasolina += abastecer;
+                        else {
+                            Console.WriteLine("Voce não pode abastecer mais que a quantidade do tanque");
+                            abastecer = 3000;
+                        }
+                    }
+                    while (abastecer == 3000);
+                }
+                if (num == 2) {
+                    do {
+                        Console.WriteLine("Quantos litros deseja abastecer?");
+                        uint.TryParse(Console.ReadLine(), out abastecer);
+                        if (QtdAlcool + abastecer <= CapacidadeTanque)
+                            QtdAlcool += abastecer;
+                        else {
+                            Console.WriteLine("Voce não pode abastecer mais que a quantidade do tanque");
+                            abastecer = 3000;
+                        }
+                    }
+                    while (abastecer == 3000);
+                }
             }
 
             if (TipoCombustivel == "Gasolina") {
                 do {
+                    Console.WriteLine("Quantos litros deseja abastecer?");
                     uint.TryParse(Console.ReadLine(), out abastecer);
                     if (QtdGasolina + abastecer <= CapacidadeTanque)
                         QtdGasolina += abastecer;
@@ -79,6 +107,7 @@ namespace Veiculo {
             }
             if (TipoCombustivel == "Alcool") {
                 do {
+                    Console.WriteLine("Quantos litros deseja abastecer?");
                     uint.TryParse(Console.ReadLine(), out abastecer);
                     if (QtdAlcool + abastecer <= CapacidadeTanque)
                         QtdAlcool += abastecer;

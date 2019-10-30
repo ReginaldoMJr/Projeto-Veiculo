@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Veiculo {
     class Menu {
@@ -42,17 +41,29 @@ namespace Veiculo {
                                                 veiculo.QtdGasolina--;
                                             }
                                         }
+                                        if (veiculo.QtdGasolina == 0 && veiculo.QtdAlcool == 0) {
+                                            Console.WriteLine("Acabou o combustivel, abastecer");
+                                            veiculo.Abastecer();
+                                        }
                                     }
                                     else if (veiculo.TipoCombustivel == "Alcool") {
                                         if (km % veiculo.Autonomia == 0) {
                                             if (veiculo.QtdAlcool > 0)
                                                 veiculo.QtdAlcool--;
+                                            if (veiculo.QtdGasolina == 0) {
+                                                Console.WriteLine("Acabou o combustivel, abastecer");
+                                                veiculo.Abastecer();
+                                            }
                                         }
                                     }
                                     else if (veiculo.TipoCombustivel == "Gasolina") {
                                         if (km % veiculo.Autonomia == 0) {
                                             if (veiculo.QtdGasolina > 0)
                                                 veiculo.QtdGasolina--;
+                                            if (veiculo.QtdGasolina == 0) {
+                                                Console.WriteLine("Acabou o combustivel, abastecer");
+                                                veiculo.Abastecer();
+                                            }
                                         }
                                     }
                                 }
@@ -61,7 +72,7 @@ namespace Veiculo {
                         }
                         break;
                     case 3:
-                        veiculo.Abastecer(veiculo);
+                        veiculo.Abastecer();
                         break;
                     case 4:
                         Console.WriteLine(veiculo);
