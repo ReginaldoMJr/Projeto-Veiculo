@@ -12,8 +12,8 @@ namespace Veiculo {
         public uint AutonomiaG { get; set; }
         public uint AutonomiaA { get; set; }
         public uint Autonomia { get; set; }
-        public uint QtdGasolina { get; set; }
-        public uint QtdAlcool { get; set; }
+        public double QtdGasolina { get; set; }
+        public double QtdAlcool { get; set; }
 
         public void CadastrarVeiculo() {
             Console.Write("Digite a marca do veiculo: ");
