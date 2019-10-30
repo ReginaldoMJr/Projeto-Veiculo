@@ -66,6 +66,8 @@ namespace Veiculo {
                 int.TryParse(Console.ReadLine(), out num);
                 if (num == 1) {
                     do {
+                        double QtdCombustivel = QtdAlcool + QtdGasolina;
+                        Console.WriteLine($"quantidade de combustivel: {QtdCombustivel}/{CapacidadeTanque}");
                         Console.WriteLine("Quantos litros deseja abastecer?");
                         uint.TryParse(Console.ReadLine(), out abastecer);
                         if (QtdGasolina + abastecer <= CapacidadeTanque)
@@ -79,9 +81,11 @@ namespace Veiculo {
                 }
                 if (num == 2) {
                     do {
+                        double QtdCombustivel = QtdAlcool + QtdGasolina;
+                        Console.WriteLine($"quantidade de combustivel: {QtdCombustivel}/{CapacidadeTanque}");
                         Console.WriteLine("Quantos litros deseja abastecer?");
                         uint.TryParse(Console.ReadLine(), out abastecer);
-                        if (QtdAlcool + abastecer <= CapacidadeTanque)
+                        if (QtdAlcool + QtdGasolina + abastecer <= CapacidadeTanque)
                             QtdAlcool += abastecer;
                         else {
                             Console.WriteLine("Voce não pode abastecer mais que a quantidade do tanque");
@@ -97,7 +101,7 @@ namespace Veiculo {
                     Console.WriteLine($"quantidade de combustivel: {QtdGasolina}/{CapacidadeTanque}");
                     Console.WriteLine("Quantos litros deseja abastecer?");
                     uint.TryParse(Console.ReadLine(), out abastecer);
-                    if (QtdGasolina + abastecer <= CapacidadeTanque)
+                    if (QtdGasolina + QtdAlcool + abastecer <= CapacidadeTanque)
                         QtdGasolina += abastecer;
                     else {
                         Console.WriteLine("Voce não pode abastecer mais que a quantidade do tanque");
