@@ -29,9 +29,36 @@ namespace Veiculo {
                             double.TryParse(Console.ReadLine(), out viagem);
 
                             if (veiculo.TipoCombustivel == "Flex") {
-
+                                do {
+                                    if (veiculo.QtdAlcool < viagem) {
+                                        viagem -= veiculo.QtdAlcool * veiculo.AutonomiaA;
+                                        veiculo.QtdAlcool = 0;
+                                    }
+                                    if (veiculo.QtdAlcool >= viagem) {
+                                        veiculo.QtdAlcool -= viagem;
+                                        viagem -= veiculo.QtdAlcool;
+                                    }
+                                    if (veiculo.QtdAlcool == 0) {
+                                        if (veiculo.QtdGasolina < viagem) {
+                                            viagem -= veiculo.QtdGasolina * veiculo.AutonomiaG;
+                                            veiculo.QtdGasolina = 0;
+                                        }
+                                        if (veiculo.QtdGasolina >= viagem) {
+                                            veiculo.QtdGasolina -= viagem;
+                                            viagem -= veiculo.QtdGasolina;
+                                        }
+                                        if (veiculo.QtdGasolina <= 0 && viagem != 0) {
+                                            Console.WriteLine($"Faltam {viagem} KM");
+                                            veiculo.Abastecer();
+                                        }
+                                    }
+                                }
+                                while (viagem > 0);
+                                if (viagem <= 0) {
+                                    Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
+                                    Console.ReadLine();
+                                }
                             }
-
 
                             if (veiculo.TipoCombustivel == "Alcool") {
                                 do {
@@ -49,6 +76,10 @@ namespace Veiculo {
                                     } 
                                 }
                                 while (viagem > 0);
+                                if (viagem <= 0) {
+                                    Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
+                                    Console.ReadLine();
+                                }
                             }
 
 
