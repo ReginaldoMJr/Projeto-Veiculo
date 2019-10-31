@@ -7,6 +7,10 @@ namespace Veiculo {
             string num;
             do {
                 do {
+                    Console.Clear();
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine("------------- Menu -------------");
+                    Console.ResetColor();
                     Console.WriteLine("[1] Cadastrar carro");
                     Console.WriteLine("[2] Dirigir");
                     Console.WriteLine("[3] Abastecer");
@@ -20,15 +24,20 @@ namespace Veiculo {
                 }
                 while (num == "5");
                 switch (num) {
+                    //Faz o cadastro do veiculo
                     case "1":
                         Console.Clear();
                         veiculo = new Veiculo();
                         veiculo.CadastrarVeiculo();
                         break;
+                    //Função dirigir para todos os tipos de combustivel
                     case "2":
                         Console.Clear();
                         if (veiculo == null) {
-                            Console.WriteLine("Nenhum veiculo cadastrado");
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Não tem nenhum carro, aperte enter para voltar ao menu");
+                            Console.ResetColor();
+                            Console.ReadLine();
                             num = "5";
                         }
                         else {
@@ -63,7 +72,9 @@ namespace Veiculo {
                                 }
                                 while (viagem > 0);
                                 if (viagem <= 0) {
+                                    Console.ForegroundColor = ConsoleColor.Green;
                                     Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
+                                    Console.ResetColor();
                                     Console.ReadLine();
                                 }
                             }
@@ -85,8 +96,9 @@ namespace Veiculo {
                                 }
                                 while (viagem > 0);
                                 if (viagem <= 0) {
+                                    Console.ForegroundColor = ConsoleColor.Green;
                                     Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
-                                    Console.ReadLine();
+                                    Console.ResetColor();
                                 }
                             }
 
@@ -108,18 +120,36 @@ namespace Veiculo {
                                 }
                                 while (viagem > 0);
                                 if (viagem <= 0) {
+                                    Console.ForegroundColor = ConsoleColor.Green;
                                     Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
-                                    Console.ReadLine();
+                                    Console.ResetColor();
                                 }
                             }
                         }
                         break;
+                    //Função para abastecer o veiculo
                     case "3":
-                        veiculo.Abastecer();
+                        if (veiculo == null) {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Não tem nenhum carro, aperte enter para voltar ao menu");
+                            Console.ResetColor();
+                            Console.ReadLine();
+                        }
+                        else
+                            veiculo.Abastecer();
                         break;
+                    //Mostrar as informações do veiculo
                     case "4":
-                        Console.WriteLine(veiculo);
+                        if (veiculo == null) {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Não tem nenhum carro, aperte enter para voltar ao menu");
+                            Console.ResetColor();
+                            Console.ReadLine();
+                        }
+                        else
+                            Console.WriteLine(veiculo);
                         break;
+                    //Sair do programa
                     case "0":
                         Console.Write("Sair do programa selecionado, se tem certeza disso aperte enter, senão aperte esc para voltar ao menu");
                         if (Console.ReadKey().Key == ConsoleKey.Escape)

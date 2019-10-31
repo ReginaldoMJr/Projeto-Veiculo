@@ -16,11 +16,15 @@ namespace Veiculo {
         public double QtdAlcool { get; set; }
 
         public void CadastrarVeiculo() {
-            
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("----------- Cadastro Veiculo -------------\n");
+            Console.ResetColor();
+
             do {
                 Console.Write("Digite a marca do veiculo: ");
                 Marca = Console.ReadLine().Trim();
-                if (Regex.IsMatch(Marca, "^[A-Z a-z]{1,20}$") == false || Marca.Contains("  ")) {
+                if (Regex.IsMatch(Marca, "^[A-Z a-z]{1,20}$") == false || Marca.Contains("  ")) { //validação da marca
                     Console.WriteLine("\nNome da marca invalido, Digite novamente\n");
                     Marca = null;
                 }
@@ -30,7 +34,7 @@ namespace Veiculo {
             do {
                 Console.Write("Digite a modelo do veiculo: ");
                 Modelo = Console.ReadLine();
-                if (Regex.IsMatch(Modelo, "^[A-Z a-z0-9]{1,20}$") == false || Modelo.Contains("  ")) {
+                if (Regex.IsMatch(Modelo, "^[A-Z a-z0-9]{1,20}$") == false || Modelo.Contains("  ")) { //validação do modelo
                     Console.WriteLine("\nNome do modelo invalido, Digite novamente\n");
                     Modelo = null;
                 }
@@ -40,7 +44,7 @@ namespace Veiculo {
             do {
                 Console.Write("Digite a placa do veiculo: ");
                 Placa = Console.ReadLine();
-                if(Regex.IsMatch(Placa, @"^[A-Z]{3}\-[0-9]{4}$")) {
+                if(Regex.IsMatch(Placa, "^[A-Z0-9-]$")) { //validação da placa
                     Console.WriteLine("\nPlaca invalida, digite novamente\n");
                     Placa = null;
                 }
@@ -50,7 +54,7 @@ namespace Veiculo {
             do {
                 Console.Write("Digite o ano do veiculo: ");
                 Ano = Console.ReadLine();
-                if (Regex.IsMatch(Ano, "^[0-9]{4}$") == false) {
+                if (Regex.IsMatch(Ano, "^[0-9]{4}$") == false || int.Parse(Ano) > 2020) { //validação do ano
                     Console.WriteLine("\nAno invalido, Digite novamente\n");
                     Ano = null;
                 }
@@ -61,7 +65,7 @@ namespace Veiculo {
             do {
                 Console.Write("Digite a capacidade do tanque do veiculo: ");
                 uint.TryParse(Console.ReadLine(), out n);
-                if (n > 1000 || n < 5) {
+                if (n > 1000 || n < 5) { //validação da capacidade do tanque
                     Console.WriteLine("\nCapacidade do tanque invalido, digite novamente\n");
                     n = 0;
                 }
