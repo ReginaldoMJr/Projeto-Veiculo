@@ -24,7 +24,7 @@ namespace Veiculo {
             do {
                 Console.Write("Digite a marca do veiculo: ");
                 Marca = Console.ReadLine().Trim();
-                if (Regex.IsMatch(Marca, "^[A-Z a-z]{1,20}$") == false || Marca.Contains("  ")) { //validação da marca
+                if (Regex.IsMatch(Marca, "^[A-Z a-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ]{1,20}$") == false || Marca.Contains("  ")) { //validação da marca
                     Console.WriteLine("\nNome da marca invalido, Digite novamente\n");
                     Marca = null;
                 }
@@ -34,7 +34,7 @@ namespace Veiculo {
             do {
                 Console.Write("Digite a modelo do veiculo: ");
                 Modelo = Console.ReadLine();
-                if (Regex.IsMatch(Modelo, "^[A-Z a-z0-9]{1,20}$") == false || Modelo.Contains("  ")) { //validação do modelo
+                if (Regex.IsMatch(Modelo, "^[A-Z a-z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ]{1,20}$") == false || Modelo.Contains("  ")) { //validação do modelo
                     Console.WriteLine("\nNome do modelo invalido, Digite novamente\n");
                     Modelo = null;
                 }
@@ -73,11 +73,13 @@ namespace Veiculo {
             while (n == 0);
             CapacidadeTanque = n;
 
+            //Escolher o tipo de combustivel do veiculo
             Console.WriteLine("[1] Flex");
             Console.WriteLine("[2] Alcool");
             Console.WriteLine("[3] Gasolina");
             Console.Write("Digite qual o tipo de combustivel do veiculo: ");
             string verifica = Console.ReadLine();
+            //Se o tipo for flex
             if (verifica == "1") {
                 TipoCombustivel = "Flex";
                 uint result;
@@ -102,6 +104,7 @@ namespace Veiculo {
                 }
                 while (result2 == 0);
             }
+            //Se o tipo for alcool
             else if (verifica == "2") {
                 TipoCombustivel = "Alcool";
                 uint result;
@@ -115,6 +118,7 @@ namespace Veiculo {
                 }
                 while (result == 0);
             }
+            //Se o tipo for gasolina
             else if (verifica == "3") {
                 TipoCombustivel = "Gasolina";
                 uint result;
@@ -130,13 +134,16 @@ namespace Veiculo {
             }
 
         }
+        //Metodo para abastecer o veiculo
         public void Abastecer() {
             uint abastecer;
+            //Abastecer se o tipo for flex
             if (TipoCombustivel == "Flex") {
                 int num;
                 Console.WriteLine("[1] Gasolina");
                 Console.WriteLine("[2] Alcool");
                 int.TryParse(Console.ReadLine(), out num);
+                //Abastecer Gasolina em um carro flex
                 if (num == 1) {
                     do {
                         double QtdCombustivel = QtdAlcool + QtdGasolina;
@@ -152,6 +159,7 @@ namespace Veiculo {
                     }
                     while (abastecer == 100000);
                 }
+                //Abastecer Alcool no carro flex
                 if (num == 2) {
                     do {
                         double QtdCombustivel = QtdAlcool + QtdGasolina;
@@ -169,6 +177,7 @@ namespace Veiculo {
                 }
             }
 
+            //Abastecer se o tipo for Gasolina
             if (TipoCombustivel == "Gasolina") {
                 do {
                     Console.WriteLine($"quantidade de combustivel: {QtdGasolina}/{CapacidadeTanque}");
@@ -183,6 +192,7 @@ namespace Veiculo {
                 }
                 while (abastecer == 3000);
             }
+            //Abastecer se o tipo for Alcool
             if (TipoCombustivel == "Alcool") {
                 do {
                     Console.WriteLine($"quantidade de combustivel: {QtdAlcool}/{CapacidadeTanque}");
