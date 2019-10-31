@@ -22,6 +22,7 @@ namespace Veiculo {
                 switch (num) {
                     case "1":
                         Console.Clear();
+                        veiculo = new Veiculo();
                         veiculo.CadastrarVeiculo();
                         break;
                     case "2":
@@ -37,22 +38,22 @@ namespace Veiculo {
 
                             if (veiculo.TipoCombustivel == "Flex") {
                                 do {
-                                    if (veiculo.QtdAlcool < viagem) {
+                                    if (veiculo.QtdAlcool * veiculo.AutonomiaA <= viagem) {
                                         viagem -= veiculo.QtdAlcool * veiculo.AutonomiaA;
                                         veiculo.QtdAlcool = 0;
                                     }
-                                    if (veiculo.QtdAlcool >= viagem) {
-                                        veiculo.QtdAlcool -= viagem;
-                                        viagem -= veiculo.QtdAlcool;
+                                    if (veiculo.QtdAlcool * veiculo.AutonomiaA > viagem) {
+                                        veiculo.QtdAlcool -= viagem / veiculo.AutonomiaA;
+                                        viagem = 0;
                                     }
                                     if (veiculo.QtdAlcool == 0) {
-                                        if (veiculo.QtdGasolina < viagem) {
+                                        if (veiculo.QtdGasolina * veiculo.AutonomiaG <= viagem) {
                                             viagem -= veiculo.QtdGasolina * veiculo.AutonomiaG;
                                             veiculo.QtdGasolina = 0;
                                         }
-                                        if (veiculo.QtdGasolina >= viagem) {
-                                            veiculo.QtdGasolina -= viagem;
-                                            viagem -= veiculo.QtdGasolina;
+                                        if (veiculo.QtdGasolina * veiculo.AutonomiaG > viagem) {
+                                            veiculo.QtdGasolina -= viagem / veiculo.AutonomiaG;
+                                            viagem = 0;
                                         }
                                         if (veiculo.QtdGasolina <= 0 && viagem != 0) {
                                             Console.WriteLine($"Faltam {viagem} KM");
@@ -69,18 +70,18 @@ namespace Veiculo {
 
                             if (veiculo.TipoCombustivel == "Alcool") {
                                 do {
-                                    if (veiculo.QtdAlcool < viagem) {
+                                    if (veiculo.QtdAlcool * veiculo.Autonomia <= viagem) {
                                         viagem -= veiculo.QtdAlcool * veiculo.Autonomia;
                                         veiculo.QtdAlcool = 0;
                                     }
-                                    if (veiculo.QtdAlcool >= viagem) {
-                                        veiculo.QtdAlcool -= viagem;
-                                        viagem -= veiculo.QtdAlcool;
+                                    if (veiculo.QtdAlcool * veiculo.Autonomia > viagem) {
+                                        veiculo.QtdAlcool -= viagem / veiculo.Autonomia;
+                                        viagem = 0;
                                     }
-                                    if (veiculo.QtdAlcool == 0) {
+                                    if (veiculo.QtdAlcool <= 0 && viagem != 0) {
                                         Console.WriteLine($"Faltam {viagem} KM");
                                         veiculo.Abastecer();
-                                    } 
+                                    }
                                 }
                                 while (viagem > 0);
                                 if (viagem <= 0) {
@@ -92,13 +93,13 @@ namespace Veiculo {
 
                             if (veiculo.TipoCombustivel == "Gasolina") {
                                 do {
-                                    if (veiculo.QtdGasolina < viagem) {
+                                    if (veiculo.QtdGasolina * veiculo.Autonomia <= viagem) {
                                         viagem -= veiculo.QtdGasolina * veiculo.Autonomia;
                                         veiculo.QtdGasolina = 0;
                                     }
-                                    if (veiculo.QtdGasolina >= viagem) {
-                                        veiculo.QtdGasolina -= viagem;
-                                        viagem -= veiculo.QtdGasolina;
+                                    if (veiculo.QtdGasolina * veiculo.Autonomia > viagem) {
+                                        veiculo.QtdGasolina -= viagem/veiculo.Autonomia;
+                                        viagem = 0;
                                     }
                                     if (veiculo.QtdGasolina <= 0 && viagem != 0) {
                                         Console.WriteLine($"Faltam {viagem} KM");

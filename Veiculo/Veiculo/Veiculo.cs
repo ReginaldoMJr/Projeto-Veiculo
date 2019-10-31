@@ -67,6 +67,7 @@ namespace Veiculo {
                 }
             }
             while (n == 0);
+            CapacidadeTanque = n;
 
             Console.WriteLine("[1] Flex");
             Console.WriteLine("[2] Alcool");
