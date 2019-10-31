@@ -1,12 +1,12 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace Veiculo {
     class Veiculo {
         public string Marca { get; set; }
         public string Modelo { get; set; }
         public string Placa { get; set; }
-        public uint Ano { get; set; }
-        public uint VelocidadeMax { get; set; }
+        public string Ano { get; set; }
         public uint CapacidadeTanque { get; set; }
         public string TipoCombustivel { get; set; }
         public uint AutonomiaG { get; set; }
@@ -16,23 +16,57 @@ namespace Veiculo {
         public double QtdAlcool { get; set; }
 
         public void CadastrarVeiculo() {
-            Console.Write("Digite a marca do veiculo: ");
-            Marca = Console.ReadLine();
+            
+            do {
+                Console.Write("Digite a marca do veiculo: ");
+                Marca = Console.ReadLine().Trim();
+                if (Regex.IsMatch(Marca, "^[A-Z a-z]{1,20}$") == false || Marca.Contains("  ")) {
+                    Console.WriteLine("\nNome da marca invalido, Digite novamente\n");
+                    Marca = null;
+                }
+            }
+            while (Marca == null);
+            
+            do {
+                Console.Write("Digite a modelo do veiculo: ");
+                Modelo = Console.ReadLine();
+                if (Regex.IsMatch(Modelo, "^[A-Z a-z0-9]{1,20}$") == false || Modelo.Contains("  ")) {
+                    Console.WriteLine("\nNome do modelo invalido, Digite novamente\n");
+                    Modelo = null;
+                }
+            }
+            while (Modelo == null);
 
-            Console.Write("Digite a modelo do veiculo: ");
-            Modelo = Console.ReadLine();
+            do {
+                Console.Write("Digite a placa do veiculo: ");
+                Placa = Console.ReadLine();
+                if(Regex.IsMatch(Placa, @"^[A-Z]{3}\-[0-9]{4}$")) {
+                    Console.WriteLine("\nPlaca invalida, digite novamente\n");
+                    Placa = null;
+                }
+            }
+            while (Placa == null);
 
-            Console.Write("Digite a placa do veiculo: ");
-            Placa = Console.ReadLine();
+            do {
+                Console.Write("Digite o ano do veiculo: ");
+                Ano = Console.ReadLine();
+                if (Regex.IsMatch(Ano, "^[0-9]{4}$") == false) {
+                    Console.WriteLine("\nAno invalido, Digite novamente\n");
+                    Ano = null;
+                }
+            }
+            while (Ano == null);
 
-            Console.Write("Digite o ano do veiculo: ");
-            Ano = uint.Parse(Console.ReadLine());
-
-            Console.Write("Digite a velocidade maxima do veiculo: ");
-            VelocidadeMax = uint.Parse(Console.ReadLine());
-
-            Console.Write("Digite a capacidade do tanque do veiculo: ");
-            CapacidadeTanque = uint.Parse(Console.ReadLine());
+            uint n;
+            do {
+                Console.Write("Digite a capacidade do tanque do veiculo: ");
+                uint.TryParse(Console.ReadLine(), out n);
+                if (n > 1000 || n < 5) {
+                    Console.WriteLine("\nCapacidade do tanque invalido, digite novamente\n");
+                    n = 0;
+                }
+            }
+            while (n == 0);
 
             Console.WriteLine("[1] Flex");
             Console.WriteLine("[2] Alcool");
@@ -41,21 +75,55 @@ namespace Veiculo {
             string verifica = Console.ReadLine();
             if (verifica == "1") {
                 TipoCombustivel = "Flex";
-                Console.Write("Digite quantos km o veiculo faz por litro de alcool: ");
-                AutonomiaA = uint.Parse(Console.ReadLine());
-                Console.Write("Digite quantos km o veiculo faz por litro de gasolina: ");
-                AutonomiaG = uint.Parse(Console.ReadLine());
+                uint result;
+                do {
+                    Console.Write("Digite quantos km o veiculo faz por litro de alcool: ");
+                    uint.TryParse(Console.ReadLine(), out result);
+                    if (result != 0)
+                        AutonomiaA = result;
+                    if(result == 0)
+                        Console.WriteLine("Autonomia invalida, digite novamente");
+                }
+                while (result == 0);
+                
+                uint result2;
+                do {
+                    Console.Write("Digite quantos km o veiculo faz por litro de gasolina: ");
+                    uint.TryParse(Console.ReadLine(), out result2);
+                    if (result2 != 0)
+                        AutonomiaG = result;
+                    if (result2 == 0)
+                        Console.WriteLine("Autonomia invalida, digite novamente");
+                }
+                while (result2 == 0);
             }
-            if (verifica == "2") {
+            else if (verifica == "2") {
                 TipoCombustivel = "Alcool";
-                Console.Write("Digite quantos km o veiculo faz por litro: ");
-                Autonomia = uint.Parse(Console.ReadLine());
+                uint result;
+                do {
+                    Console.Write("Digite quantos km o veiculo faz por litro: ");
+                    uint.TryParse(Console.ReadLine(), out result);
+                    if (result != 0)
+                        Autonomia = result;
+                    if (result == 0)
+                        Console.WriteLine("Autonomia invalida, digite novamente");
+                }
+                while (result == 0);
             }
-            if (verifica == "3") {
+            else if (verifica == "3") {
                 TipoCombustivel = "Gasolina";
-                Console.Write("Digite quantos km o veiculo faz por litro: ");
-                Autonomia = uint.Parse(Console.ReadLine());
+                uint result;
+                do {
+                    Console.Write("Digite quantos km o veiculo faz por litro: ");
+                    uint.TryParse(Console.ReadLine(), out result);
+                    if (result != 0)
+                        Autonomia = result;
+                    if (result == 0)
+                        Console.WriteLine("Autonomia invalida, digite novamente");
+                }
+                while (result == 0);
             }
+
         }
         public void Abastecer() {
             uint abastecer;
@@ -74,10 +142,10 @@ namespace Veiculo {
                             QtdGasolina += abastecer;
                         else {
                             Console.WriteLine("Voce não pode abastecer mais que a quantidade do tanque");
-                            abastecer = 3000;
+                            abastecer = 100000;
                         }
                     }
-                    while (abastecer == 3000);
+                    while (abastecer == 100000);
                 }
                 if (num == 2) {
                     do {
@@ -89,10 +157,10 @@ namespace Veiculo {
                             QtdAlcool += abastecer;
                         else {
                             Console.WriteLine("Voce não pode abastecer mais que a quantidade do tanque");
-                            abastecer = 3000;
+                            abastecer = 100000;
                         }
                     }
-                    while (abastecer == 3000);
+                    while (abastecer == 100000);
                 }
             }
 
@@ -126,8 +194,8 @@ namespace Veiculo {
             }
         }
         public override string ToString() {
-            return $"Marca: {Marca} -- Modelo: {Modelo} -- Placa: {Placa} -- Ano: {Ano} -- Velocidade Maxima: {VelocidadeMax}"
-                + $"\nCapacidade do tanque: {CapacidadeTanque} -- Tipo de Combustivel: {TipoCombustivel} -- Autonomia: {Autonomia}";
+            return $"Marca: {Marca} -- Modelo: {Modelo} -- Placa: {Placa} -- Ano: {Ano}"
+                + $"\nCapacidade do tanque: {CapacidadeTanque} Litros -- Tipo de Combustivel: {TipoCombustivel} -- Autonomia: {Autonomia}/L";
         }
     }
 }
