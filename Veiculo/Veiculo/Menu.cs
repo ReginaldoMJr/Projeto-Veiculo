@@ -1,27 +1,34 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace Veiculo {
     class Menu {
         public void menu(Veiculo veiculo) {
-            int num;
+            string num;
             do {
-                Console.WriteLine("[1] Cadastrar carro");
-                Console.WriteLine("[2] Dirigir");
-                Console.WriteLine("[3] Abastecer");
-                Console.WriteLine("[4] Exibir informações do veiculo");
-                Console.WriteLine("[0] Sair do programa");
-                num = int.Parse(Console.ReadLine());
+                do {
+                    Console.WriteLine("[1] Cadastrar carro");
+                    Console.WriteLine("[2] Dirigir");
+                    Console.WriteLine("[3] Abastecer");
+                    Console.WriteLine("[4] Exibir informações do veiculo");
+                    Console.WriteLine("[0] Sair do programa");
+                    num = Console.ReadLine();
+                    if(Regex.IsMatch(num, "^[0-4]{1}$") == false) {
+                        Console.WriteLine("Valor invalido, digite novamente");
+                        num = "5";
+                    }
+                }
+                while (num == "5");
                 switch (num) {
-                    case 1:
+                    case "1":
                         Console.Clear();
-                        veiculo = new Veiculo();
                         veiculo.CadastrarVeiculo();
                         break;
-                    case 2:
+                    case "2":
                         Console.Clear();
                         if (veiculo == null) {
                             Console.WriteLine("Nenhum veiculo cadastrado");
-                            num = 5;
+                            num = "5";
                         }
                         else {
                             double viagem;
@@ -106,20 +113,20 @@ namespace Veiculo {
                             }
                         }
                         break;
-                    case 3:
+                    case "3":
                         veiculo.Abastecer();
                         break;
-                    case 4:
+                    case "4":
                         Console.WriteLine(veiculo);
                         break;
-                    case 0:
+                    case "0":
                         Console.Write("Sair do programa selecionado, se tem certeza disso aperte enter, senão aperte esc para voltar ao menu");
                         if (Console.ReadKey().Key == ConsoleKey.Escape)
-                            num = 5;
+                            num = "5";
                         break;
                 }
             }
-            while (num != 0);
+            while (num != "0");
 
         }
     }
