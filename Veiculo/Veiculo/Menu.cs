@@ -63,8 +63,10 @@ namespace Veiculo {
                             Console.ResetColor();
                             Console.ReadLine();
                         }
-                        else
+                        else {
                             Console.WriteLine(veiculo);
+                            Console.ReadLine();
+                        }
                         break;
                     //Sair do programa
                     case "0":

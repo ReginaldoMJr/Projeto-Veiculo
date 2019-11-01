@@ -9,9 +9,8 @@ namespace Veiculo {
         public string Ano { get; set; }
         public uint CapacidadeTanque { get; set; }
         public string TipoCombustivel { get; set; }
-        public uint AutonomiaG { get; set; }
-        public uint AutonomiaA { get; set; }
-        public uint Autonomia { get; set; }
+        public double AutonomiaG { get; set; }
+        public double AutonomiaA { get; set; }
         public double QtdGasolina { get; set; }
         public double QtdAlcool { get; set; }
         public string Pneu { get; set; }
@@ -136,6 +135,22 @@ namespace Veiculo {
                 }
                 while (result == 0);
             }
+            do {
+                Console.WriteLine("Qual o nivel do pneu?");
+                Pneu = Console.ReadLine();
+                if(Pneu != "1" && Pneu != "2" && Pneu != "3")
+                    Console.WriteLine("\nValor invalido, Digite um numero de 1 a 3\n");
+            }
+            while (!Regex.IsMatch(Pneu, "^[1-3]{1}$"));
+
+            if (Pneu == "2") {
+                AutonomiaA -= AutonomiaA * 0.0725;
+                AutonomiaG -= AutonomiaG * 0.0725;
+            }
+            if(Pneu == "1") {
+                AutonomiaA -= AutonomiaA * 0.0915;
+                AutonomiaG -= AutonomiaG * 0.0915;
+            }
 
         }
         //Metodo para abastecer o veiculo
@@ -218,11 +233,19 @@ namespace Veiculo {
             string Cli;
             do {
                 Console.Write("O clima esta ruim? (S / N): ");
-                Cli = Console.ReadLine();
+                Cli = Console.ReadLine().ToUpper();
             }
-            while (!Regex.IsMatch(Cli, "^[sSnN]{1}$"));
+            while (!Regex.IsMatch(Cli, "^[SN]{1}$"));
+            bool clima;
+            if (Cli == "S")
+                clima = true;
+            else
+                clima = false;
 
-
+            if(clima == true) {
+                AutonomiaA -= AutonomiaA * 0.135;
+                AutonomiaG -= AutonomiaG * 0.12;
+            }
             if (TipoCombustivel == "Flex") {
                 do {
                     if (QtdAlcool * AutonomiaA <= viagem) {
@@ -258,12 +281,12 @@ namespace Veiculo {
             }
             if (TipoCombustivel == "Alcool") {
                 do {
-                    if (QtdAlcool * Autonomia <= viagem) {
-                        viagem -= QtdAlcool * Autonomia;
+                    if (QtdAlcool * AutonomiaA <= viagem) {
+                        viagem -= QtdAlcool * AutonomiaA;
                         QtdAlcool = 0;
                     }
-                    else if (QtdAlcool * Autonomia > viagem) {
-                        QtdAlcool -= viagem / Autonomia;
+                    else if (QtdAlcool * AutonomiaA > viagem) {
+                        QtdAlcool -= viagem / AutonomiaA;
                         viagem = 0;
                     }
                     if (QtdAlcool <= 0 && viagem > 0) {
@@ -276,16 +299,17 @@ namespace Veiculo {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
                     Console.ResetColor();
+                    Console.ReadLine();
                 }
             }
             if (TipoCombustivel == "Gasolina") {
                 do {
-                    if (QtdGasolina * Autonomia <= viagem) {
-                        viagem -= QtdGasolina * Autonomia;
+                    if (QtdGasolina * AutonomiaG <= viagem) {
+                        viagem -= QtdGasolina * AutonomiaG;
                         QtdGasolina = 0;
                     }
-                    if (QtdGasolina * Autonomia > viagem) {
-                        QtdGasolina -= viagem / Autonomia;
+                    if (QtdGasolina * AutonomiaG > viagem) {
+                        QtdGasolina -= viagem / AutonomiaG;
                         viagem = 0;
                     }
                     if (QtdGasolina <= 0 && viagem != 0) {
@@ -298,12 +322,13 @@ namespace Veiculo {
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
                     Console.ResetColor();
+                    Console.ReadLine();
                 }
             }
         }
         public override string ToString() {
             return $"Marca: {Marca} -- Modelo: {Modelo} -- Placa: {Placa} -- Ano: {Ano}"
-                + $"\nCapacidade do tanque: {CapacidadeTanque} Litros -- Tipo de Combustivel: {TipoCombustivel} -- Autonomia: {Autonomia}/L";
+                + $"\nCapacidade do tanque: {CapacidadeTanque} Litros -- Tipo de Combustivel: {TipoCombustivel}";
         }
     }
 }
