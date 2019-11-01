@@ -11,6 +11,7 @@ namespace Veiculo {
         public string TipoCombustivel { get; set; }
         public double AutonomiaG { get; set; }
         public double AutonomiaA { get; set; }
+        public double QtdCombustivel { get; set; }
         public double QtdGasolina { get; set; }
         public double QtdAlcool { get; set; }
         public string Pneu { get; set; }
@@ -30,7 +31,7 @@ namespace Veiculo {
                 }
             }
             while (Marca == null);
-            
+
             do {
                 Console.Write("Digite a modelo do veiculo: ");
                 Modelo = Console.ReadLine();
@@ -44,7 +45,7 @@ namespace Veiculo {
             do {
                 Console.Write("Digite a placa do veiculo: ");
                 Placa = Console.ReadLine();
-                if(Regex.IsMatch(Placa, "^[A-Z0-9-]$")) { //validação da placa
+                if (Regex.IsMatch(Placa, "^[A-Z0-9-]$")) { //validação da placa
                     Console.WriteLine("\nPlaca invalida, digite novamente\n");
                     Placa = null;
                 }
@@ -91,11 +92,11 @@ namespace Veiculo {
                     uint.TryParse(Console.ReadLine(), out result);
                     if (result != 0)
                         AutonomiaA = result;
-                    if(result == 0)
+                    if (result == 0)
                         Console.WriteLine("Autonomia invalida, digite novamente");
                 }
                 while (result == 0);
-                
+
                 uint result2;
                 do {
                     Console.Write("Digite quantos km o veiculo faz por litro de gasolina: ");
@@ -138,7 +139,7 @@ namespace Veiculo {
             do {
                 Console.WriteLine("Qual o nivel do pneu?");
                 Pneu = Console.ReadLine();
-                if(Pneu != "1" && Pneu != "2" && Pneu != "3")
+                if (Pneu != "1" && Pneu != "2" && Pneu != "3")
                     Console.WriteLine("\nValor invalido, Digite um numero de 1 a 3\n");
             }
             while (!Regex.IsMatch(Pneu, "^[1-3]{1}$"));
@@ -147,85 +148,68 @@ namespace Veiculo {
                 AutonomiaA -= AutonomiaA * 0.0725;
                 AutonomiaG -= AutonomiaG * 0.0725;
             }
-            if(Pneu == "1") {
+            if (Pneu == "1") {
                 AutonomiaA -= AutonomiaA * 0.0915;
                 AutonomiaG -= AutonomiaG * 0.0915;
             }
 
         }
-        //Metodo para abastecer o veiculo
-        public void Abastecer() {
+        //Abastecer se o tipo for flex
+        public void AbastecerFlex() {
             uint abastecer;
-            //Abastecer se o tipo for flex
-            if (TipoCombustivel == "Flex") {
-                int num;
-                Console.WriteLine("[1] Gasolina");
-                Console.WriteLine("[2] Alcool");
-                int.TryParse(Console.ReadLine(), out num);
-                //Abastecer Gasolina em um carro flex
-                if (num == 1) {
-                    do {
-                        double QtdCombustivel = QtdAlcool + QtdGasolina;
-                        Console.WriteLine($"quantidade de combustivel: {QtdCombustivel}/{CapacidadeTanque}");
-                        Console.WriteLine("Quantos litros deseja abastecer?");
-                        uint.TryParse(Console.ReadLine(), out abastecer);
-                        if (QtdGasolina + abastecer <= CapacidadeTanque)
-                            QtdGasolina += abastecer;
-                        else {
-                            Console.WriteLine("Voce não pode abastecer mais que a quantidade do tanque");
-                            abastecer = 100000;
-                        }
-                    }
-                    while (abastecer == 100000);
-                }
-                //Abastecer Alcool no carro flex
-                if (num == 2) {
-                    do {
-                        double QtdCombustivel = QtdAlcool + QtdGasolina;
-                        Console.WriteLine($"quantidade de combustivel: {QtdCombustivel}/{CapacidadeTanque}");
-                        Console.WriteLine("Quantos litros deseja abastecer?");
-                        uint.TryParse(Console.ReadLine(), out abastecer);
-                        if (QtdAlcool + QtdGasolina + abastecer <= CapacidadeTanque)
-                            QtdAlcool += abastecer;
-                        else {
-                            Console.WriteLine("Voce não pode abastecer mais que a quantidade do tanque");
-                            abastecer = 100000;
-                        }
-                    }
-                    while (abastecer == 100000);
-                }
-            }
-
-            //Abastecer se o tipo for Gasolina
-            if (TipoCombustivel == "Gasolina") {
+            int num;
+            Console.WriteLine("[1] Gasolina");
+            Console.WriteLine("[2] Alcool");
+            int.TryParse(Console.ReadLine(), out num);
+            //Abastecer Gasolina em um carro flex
+            if (num == 1) {
                 do {
-                    Console.WriteLine($"quantidade de combustivel: {QtdGasolina}/{CapacidadeTanque}");
+                    double QtdCombustivel = QtdAlcool + QtdGasolina;
+                    Console.WriteLine($"quantidade de combustivel: {QtdCombustivel}/{CapacidadeTanque}");
                     Console.WriteLine("Quantos litros deseja abastecer?");
                     uint.TryParse(Console.ReadLine(), out abastecer);
-                    if (QtdGasolina + QtdAlcool + abastecer <= CapacidadeTanque)
+                    if (QtdGasolina + abastecer <= CapacidadeTanque)
                         QtdGasolina += abastecer;
                     else {
                         Console.WriteLine("Voce não pode abastecer mais que a quantidade do tanque");
-                        abastecer = 3000;
+                        abastecer = 100000;
                     }
                 }
-                while (abastecer == 3000);
+                while (abastecer == 100000);
             }
-            //Abastecer se o tipo for Alcool
-            if (TipoCombustivel == "Alcool") {
+            //Abastecer Alcool no carro flex
+            if (num == 2) {
                 do {
-                    Console.WriteLine($"quantidade de combustivel: {QtdAlcool}/{CapacidadeTanque}");
+                    double QtdCombustivel = QtdAlcool + QtdGasolina;
+                    Console.WriteLine($"quantidade de combustivel: {QtdCombustivel}/{CapacidadeTanque}");
                     Console.WriteLine("Quantos litros deseja abastecer?");
                     uint.TryParse(Console.ReadLine(), out abastecer);
-                    if (QtdAlcool + abastecer <= CapacidadeTanque)
+                    if (QtdAlcool + QtdGasolina + abastecer <= CapacidadeTanque)
                         QtdAlcool += abastecer;
+                    else {
+                        Console.WriteLine("Voce não pode abastecer mais que a quantidade do tanque");
+                        abastecer = 100000;
+                    }
+                }
+                while (abastecer == 100000);
+            }
+
+        }
+        public void Abastecer(double combustivel) {
+            uint abastecer;
+            //Abastecer se o tipo for Gasolina 
+                do {
+                    Console.WriteLine($"quantidade de combustivel: {QtdCombustivel}/{CapacidadeTanque}");
+                    Console.WriteLine("Quantos litros deseja abastecer?");
+                    uint.TryParse(Console.ReadLine(), out abastecer);
+                    if (QtdCombustivel + abastecer <= CapacidadeTanque)
+                        QtdCombustivel += abastecer;
                     else {
                         Console.WriteLine("Voce não pode abastecer mais que a quantidade do tanque");
                         abastecer = 3000;
                     }
                 }
                 while (abastecer == 3000);
-            }
         }
         public void Dirigir() {
             Console.Write("Digite o tamanho da viagem: ");
@@ -242,7 +226,7 @@ namespace Veiculo {
             else
                 clima = false;
 
-            if(clima == true) {
+            if (clima == true) {
                 AutonomiaA -= AutonomiaA * 0.135;
                 AutonomiaG -= AutonomiaG * 0.12;
             }
@@ -267,7 +251,7 @@ namespace Veiculo {
                         }
                         if (QtdGasolina <= 0 && viagem != 0) {
                             Console.WriteLine($"Faltam {viagem} KM");
-                            Abastecer();
+                            AbastecerFlex();
                         }
                     }
                 }
@@ -291,7 +275,7 @@ namespace Veiculo {
                     }
                     if (QtdAlcool <= 0 && viagem > 0) {
                         Console.WriteLine($"Faltam {viagem} KM");
-                        Abastecer();
+                        Abastecer(QtdCombustivel);
                     }
                 }
                 while (viagem > 0);
@@ -314,7 +298,7 @@ namespace Veiculo {
                     }
                     if (QtdGasolina <= 0 && viagem != 0) {
                         Console.WriteLine($"Faltam {viagem} KM");
-                        Abastecer();
+                        Abastecer(QtdCombustivel);
                     }
                 }
                 while (viagem > 0);

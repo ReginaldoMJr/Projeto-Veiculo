@@ -52,8 +52,10 @@ namespace Veiculo {
                             Console.ResetColor();
                             Console.ReadLine();
                         }
+                        else if (veiculo.TipoCombustivel == "Flex")
+                            veiculo.AbastecerFlex();
                         else
-                            veiculo.Abastecer();
+                            veiculo.Abastecer(veiculo.QtdCombustivel);
                         break;
                     //Mostrar as informações do veiculo
                     case "4":
