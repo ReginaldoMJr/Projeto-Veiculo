@@ -14,6 +14,7 @@ namespace Veiculo {
         public uint Autonomia { get; set; }
         public double QtdGasolina { get; set; }
         public double QtdAlcool { get; set; }
+        public string Pneu { get; set; }
 
         public void CadastrarVeiculo() {
 
@@ -74,13 +75,16 @@ namespace Veiculo {
             CapacidadeTanque = n;
 
             //Escolher o tipo de combustivel do veiculo
-            Console.WriteLine("[1] Flex");
-            Console.WriteLine("[2] Alcool");
-            Console.WriteLine("[3] Gasolina");
-            Console.Write("Digite qual o tipo de combustivel do veiculo: ");
-            string verifica = Console.ReadLine();
+            do {
+                Console.WriteLine("[1] Flex");
+                Console.WriteLine("[2] Alcool");
+                Console.WriteLine("[3] Gasolina");
+                Console.Write("Digite qual o tipo de combustivel do veiculo: ");
+                TipoCombustivel = Console.ReadLine();
+            }
+            while (!Regex.IsMatch(TipoCombustivel, "^[1-3]{1}$"));
             //Se o tipo for flex
-            if (verifica == "1") {
+            if (TipoCombustivel == "1") {
                 TipoCombustivel = "Flex";
                 uint result;
                 do {
@@ -105,28 +109,28 @@ namespace Veiculo {
                 while (result2 == 0);
             }
             //Se o tipo for alcool
-            else if (verifica == "2") {
+            else if (TipoCombustivel == "2") {
                 TipoCombustivel = "Alcool";
                 uint result;
                 do {
                     Console.Write("Digite quantos km o veiculo faz por litro: ");
                     uint.TryParse(Console.ReadLine(), out result);
                     if (result != 0)
-                        Autonomia = result;
+                        AutonomiaA = result;
                     if (result == 0)
                         Console.WriteLine("Autonomia invalida, digite novamente");
                 }
                 while (result == 0);
             }
             //Se o tipo for gasolina
-            else if (verifica == "3") {
+            else if (TipoCombustivel == "3") {
                 TipoCombustivel = "Gasolina";
                 uint result;
                 do {
                     Console.Write("Digite quantos km o veiculo faz por litro: ");
                     uint.TryParse(Console.ReadLine(), out result);
                     if (result != 0)
-                        Autonomia = result;
+                        AutonomiaG = result;
                     if (result == 0)
                         Console.WriteLine("Autonomia invalida, digite novamente");
                 }
@@ -206,6 +210,95 @@ namespace Veiculo {
                     }
                 }
                 while (abastecer == 3000);
+            }
+        }
+        public void Dirigir() {
+            Console.Write("Digite o tamanho da viagem: ");
+            double.TryParse(Console.ReadLine(), out double viagem);
+            string Cli;
+            do {
+                Console.Write("O clima esta ruim? (S / N): ");
+                Cli = Console.ReadLine();
+            }
+            while (!Regex.IsMatch(Cli, "^[sSnN]{1}$"));
+
+
+            if (TipoCombustivel == "Flex") {
+                do {
+                    if (QtdAlcool * AutonomiaA <= viagem) {
+                        viagem -= QtdAlcool * AutonomiaA;
+                        QtdAlcool = 0;
+                    }
+                    if (QtdAlcool * AutonomiaA > viagem) {
+                        QtdAlcool -= viagem / AutonomiaA;
+                        viagem = 0;
+                    }
+                    if (QtdAlcool == 0) {
+                        if (QtdGasolina * AutonomiaG <= viagem) {
+                            viagem -= QtdGasolina * AutonomiaG;
+                            QtdGasolina = 0;
+                        }
+                        if (QtdGasolina * AutonomiaG > viagem) {
+                            QtdGasolina -= viagem / AutonomiaG;
+                            viagem = 0;
+                        }
+                        if (QtdGasolina <= 0 && viagem != 0) {
+                            Console.WriteLine($"Faltam {viagem} KM");
+                            Abastecer();
+                        }
+                    }
+                }
+                while (viagem > 0);
+                if (viagem <= 0) {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
+                    Console.ResetColor();
+                    Console.ReadLine();
+                }
+            }
+            if (TipoCombustivel == "Alcool") {
+                do {
+                    if (QtdAlcool * Autonomia <= viagem) {
+                        viagem -= QtdAlcool * Autonomia;
+                        QtdAlcool = 0;
+                    }
+                    else if (QtdAlcool * Autonomia > viagem) {
+                        QtdAlcool -= viagem / Autonomia;
+                        viagem = 0;
+                    }
+                    if (QtdAlcool <= 0 && viagem > 0) {
+                        Console.WriteLine($"Faltam {viagem} KM");
+                        Abastecer();
+                    }
+                }
+                while (viagem > 0);
+                if (viagem <= 0) {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
+                    Console.ResetColor();
+                }
+            }
+            if (TipoCombustivel == "Gasolina") {
+                do {
+                    if (QtdGasolina * Autonomia <= viagem) {
+                        viagem -= QtdGasolina * Autonomia;
+                        QtdGasolina = 0;
+                    }
+                    if (QtdGasolina * Autonomia > viagem) {
+                        QtdGasolina -= viagem / Autonomia;
+                        viagem = 0;
+                    }
+                    if (QtdGasolina <= 0 && viagem != 0) {
+                        Console.WriteLine($"Faltam {viagem} KM");
+                        Abastecer();
+                    }
+                }
+                while (viagem > 0);
+                if (viagem <= 0) {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
+                    Console.ResetColor();
+                }
             }
         }
         public override string ToString() {
