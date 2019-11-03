@@ -3,12 +3,13 @@ using System.Text.RegularExpressions;
 
 namespace Veiculo {
     class Veiculo {
-        public string Marca { get; set; }
-        public string Modelo { get; set; }
-        public string Placa { get; set; }
-        public string Ano { get; set; }
-        public uint CapacidadeTanque { get; set; }
-        public string TipoCombustivel { get; set; }
+        public string Marca { get; private set; }
+        public string Modelo { get; private set; }
+        public string Placa { get; private set; }
+        public string Ano { get; private set; }
+        public uint CapacidadeTanque { get; private set; }
+        public string TipoCombustivel { get; private set; }
+        public bool Flex { get; set; }
         public double AutonomiaG { get; set; }
         public double AutonomiaA { get; set; }
         public double QtdCombustivel { get; set; }
@@ -85,7 +86,7 @@ namespace Veiculo {
             while (!Regex.IsMatch(TipoCombustivel, "^[1-3]{1}$"));
             //Se o tipo for flex
             if (TipoCombustivel == "1") {
-                TipoCombustivel = "Flex";
+                Flex = true;
                 uint result;
                 do {
                     Console.Write("Digite quantos km o veiculo faz por litro de alcool: ");
@@ -195,7 +196,7 @@ namespace Veiculo {
             }
 
         }
-        public void Abastecer(double combustivel) {
+        public void Abastecer() {
             uint abastecer;
             //Abastecer se o tipo for Gasolina 
                 do {
@@ -211,104 +212,8 @@ namespace Veiculo {
                 }
                 while (abastecer == 3000);
         }
-        public void Dirigir() {
-            Console.Write("Digite o tamanho da viagem: ");
-            double.TryParse(Console.ReadLine(), out double viagem);
-            string Cli;
-            do {
-                Console.Write("O clima esta ruim? (S / N): ");
-                Cli = Console.ReadLine().ToUpper();
-            }
-            while (!Regex.IsMatch(Cli, "^[SN]{1}$"));
-            bool clima;
-            if (Cli == "S")
-                clima = true;
-            else
-                clima = false;
+        public void CalibrarPneu() {
 
-            if (clima == true) {
-                AutonomiaA -= AutonomiaA * 0.135;
-                AutonomiaG -= AutonomiaG * 0.12;
-            }
-            if (TipoCombustivel == "Flex") {
-                do {
-                    if (QtdAlcool * AutonomiaA <= viagem) {
-                        viagem -= QtdAlcool * AutonomiaA;
-                        QtdAlcool = 0;
-                    }
-                    if (QtdAlcool * AutonomiaA > viagem) {
-                        QtdAlcool -= viagem / AutonomiaA;
-                        viagem = 0;
-                    }
-                    if (QtdAlcool == 0) {
-                        if (QtdGasolina * AutonomiaG <= viagem) {
-                            viagem -= QtdGasolina * AutonomiaG;
-                            QtdGasolina = 0;
-                        }
-                        if (QtdGasolina * AutonomiaG > viagem) {
-                            QtdGasolina -= viagem / AutonomiaG;
-                            viagem = 0;
-                        }
-                        if (QtdGasolina <= 0 && viagem != 0) {
-                            Console.WriteLine($"Faltam {viagem} KM");
-                            AbastecerFlex();
-                        }
-                    }
-                }
-                while (viagem > 0);
-                if (viagem <= 0) {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
-                    Console.ResetColor();
-                    Console.ReadLine();
-                }
-            }
-            if (TipoCombustivel == "Alcool") {
-                do {
-                    if (QtdAlcool * AutonomiaA <= viagem) {
-                        viagem -= QtdAlcool * AutonomiaA;
-                        QtdAlcool = 0;
-                    }
-                    else if (QtdAlcool * AutonomiaA > viagem) {
-                        QtdAlcool -= viagem / AutonomiaA;
-                        viagem = 0;
-                    }
-                    if (QtdAlcool <= 0 && viagem > 0) {
-                        Console.WriteLine($"Faltam {viagem} KM");
-                        Abastecer(QtdCombustivel);
-                    }
-                }
-                while (viagem > 0);
-                if (viagem <= 0) {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
-                    Console.ResetColor();
-                    Console.ReadLine();
-                }
-            }
-            if (TipoCombustivel == "Gasolina") {
-                do {
-                    if (QtdGasolina * AutonomiaG <= viagem) {
-                        viagem -= QtdGasolina * AutonomiaG;
-                        QtdGasolina = 0;
-                    }
-                    if (QtdGasolina * AutonomiaG > viagem) {
-                        QtdGasolina -= viagem / AutonomiaG;
-                        viagem = 0;
-                    }
-                    if (QtdGasolina <= 0 && viagem != 0) {
-                        Console.WriteLine($"Faltam {viagem} KM");
-                        Abastecer(QtdCombustivel);
-                    }
-                }
-                while (viagem > 0);
-                if (viagem <= 0) {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
-                    Console.ResetColor();
-                    Console.ReadLine();
-                }
-            }
         }
         public override string ToString() {
             return $"Marca: {Marca} -- Modelo: {Modelo} -- Placa: {Placa} -- Ano: {Ano}"

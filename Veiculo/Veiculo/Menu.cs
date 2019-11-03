@@ -38,10 +38,10 @@ namespace Veiculo {
                             Console.WriteLine("Não tem nenhum carro, aperte enter para voltar ao menu");
                             Console.ResetColor();
                             Console.ReadLine();
-                            num = "5";
                         }
                         else {
-                            veiculo.Dirigir();
+                            Viagem viagem = new Viagem();
+                            viagem.Dirigir(veiculo);
                         }
                         break;
                     //Função para abastecer o veiculo
@@ -52,10 +52,10 @@ namespace Veiculo {
                             Console.ResetColor();
                             Console.ReadLine();
                         }
-                        else if (veiculo.TipoCombustivel == "Flex")
+                        else if (veiculo.Flex)
                             veiculo.AbastecerFlex();
                         else
-                            veiculo.Abastecer(veiculo.QtdCombustivel);
+                            veiculo.Abastecer();
                         break;
                     //Mostrar as informações do veiculo
                     case "4":
