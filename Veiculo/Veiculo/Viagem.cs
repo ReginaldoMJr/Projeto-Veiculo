@@ -43,8 +43,11 @@ namespace Veiculo {
                         if (veiculo.QtdGasolina <= 0 && viagem != 0) {
                             Console.WriteLine($"Faltam {viagem} KM");
                             veiculo.AbastecerFlex();
-                            veiculo.CalibrarPneu();
-                            CalculoClima(veiculo);
+                            Console.WriteLine("Deseja calibrar o pneu? Se sim, aperte enter, ou aperte esc para continuar a viagem");
+                            if (Console.ReadKey().Key == ConsoleKey.Enter)
+                                veiculo.CalibrarPneu();
+                            if (Clima)
+                                CalculoClima(veiculo);
                         }
                     }
                 }
@@ -69,8 +72,11 @@ namespace Veiculo {
                     if (veiculo.QtdCombustivel <= 0 && viagem > 0) {
                         Console.WriteLine($"Faltam {viagem} KM");
                         veiculo.Abastecer();
-                        veiculo.CalibrarPneu();
-                        CalculoClima(veiculo);
+                        Console.WriteLine("Deseja calibrar o pneu? Se sim, aperte enter, ou aperte esc para continuar a viagem");
+                        if (Console.ReadKey().Key == ConsoleKey.Enter)
+                            veiculo.CalibrarPneu();
+                        if (Clima)
+                            CalculoClima(veiculo);
                     }
                 }
                 while (viagem > 0);
@@ -94,7 +100,9 @@ namespace Veiculo {
                     if (veiculo.QtdCombustivel <= 0 && viagem != 0) {
                         Console.WriteLine($"Faltam {viagem} KM");
                         veiculo.Abastecer();
-                        veiculo.CalibrarPneu();
+                        Console.WriteLine("Deseja calibrar o pneu? Se sim, aperte enter, ou aperte esc para continuar a viagem");
+                        if (Console.ReadKey().Key == ConsoleKey.Enter)
+                            veiculo.CalibrarPneu();
                         if (Clima)
                             CalculoClima(veiculo);
                     }

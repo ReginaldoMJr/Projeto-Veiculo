@@ -223,7 +223,7 @@ namespace Veiculo {
             }
             
             do {
-                Console.WriteLine("Qual o nivel do pneu?");
+                Console.WriteLine("[3] Autonomia original\n[2] Autonomia com decrescimo de 7,25%\n[3] Autonomia com decrescimo de 9,15%\nQual o nivel do pneu?");
                 Pneu = Console.ReadLine();
                 if (Pneu != "1" && Pneu != "2" && Pneu != "3")
                     Console.WriteLine("\nValor invalido, Digite um numero de 1 a 3\n");
@@ -240,7 +240,21 @@ namespace Veiculo {
             }
         }
         public void EncherTanque() {
-
+            if(Flex == true) {
+                string num;
+                do {
+                    Console.WriteLine("Deseja encher o tanque com qual combustivel?\n[1] Gasolina\n[2] Alcool\n[3] Não encher o tanque");
+                    num = Console.ReadLine();
+                }
+                while (Regex.IsMatch(num, "^[123]{1}$"));
+                if (num == "1")
+                    QtdGasolina += CapacidadeTanque - (QtdGasolina + QtdAlcool);
+                else if (num == "2")
+                    QtdAlcool += CapacidadeTanque - (QtdGasolina + QtdAlcool);
+                else if (num == "3")
+                    AbastecerFlex();
+            }
+            QtdCombustivel += CapacidadeTanque - QtdCombustivel;
         }
         public override string ToString() {
             return $"Marca: {Marca} -- Modelo: {Modelo} -- Placa: {Placa} -- Ano: {Ano}"
