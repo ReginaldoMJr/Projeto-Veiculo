@@ -23,6 +23,7 @@ namespace Veiculo {
             Console.WriteLine("----------- Cadastro Veiculo -------------\n");
             Console.ResetColor();
 
+            //Dar valor para a marca do veiculo e validar
             do {
                 Console.Write("Digite a marca do veiculo: ");
                 Marca = Console.ReadLine().Trim();
@@ -33,8 +34,9 @@ namespace Veiculo {
             }
             while (Marca == null);
 
+            //Dar valor para o modelo do veiculo e validar
             do {
-                Console.Write("Digite a modelo do veiculo: ");
+                Console.Write("Digite o modelo do veiculo: ");
                 Modelo = Console.ReadLine();
                 if (Regex.IsMatch(Modelo, "^[A-Z a-z0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ]{1,20}$") == false || Modelo.Contains("  ")) { //validação do modelo
                     Console.WriteLine("\nNome do modelo invalido, Digite novamente\n");
@@ -43,6 +45,7 @@ namespace Veiculo {
             }
             while (Modelo == null);
 
+            //Dar valor para a placa do veiculo e validar
             do {
                 Console.Write("Digite a placa do veiculo (Modelo: BRA-6679): ");
                 Placa = Console.ReadLine();
@@ -53,6 +56,7 @@ namespace Veiculo {
             }
             while (Placa == null);
 
+            //Dar valor para o ano do veiculo e validar
             do {
                 Console.Write("Digite o ano do veiculo (Entre 1900 até 2020): ");
                 Ano = Console.ReadLine();
@@ -63,6 +67,7 @@ namespace Veiculo {
             }
             while (Ano == null);
 
+            //Dar valor para a capacidade do tanque do veiculo e validar
             uint n;
             do {
                 Console.Write("Digite a capacidade do tanque do veiculo: ");
@@ -137,6 +142,7 @@ namespace Veiculo {
                 }
                 while (result == 0);
             }
+            //Dar valor para o Pneu do veiculo, mudar a autonomia de acordo com ele e validar
             do {
                 Console.WriteLine("Qual o nivel do pneu?");
                 Pneu = Console.ReadLine();
@@ -195,6 +201,7 @@ namespace Veiculo {
             }
 
         }
+        //Abastecer os outros tipos
         public void Abastecer() {
             uint abastecer;
             //Abastecer se o tipo for Gasolina 
@@ -211,7 +218,9 @@ namespace Veiculo {
                 }
                 while (abastecer == 3000);
         }
+        //Metodo para calibrar pneu do veiculo
         public void CalibrarPneu() {
+            //Voltar para os valores originais
             if(Pneu == "2") {
                 AutonomiaA /= 0.9275;
                 AutonomiaG /= 0.9275;
@@ -221,6 +230,7 @@ namespace Veiculo {
                 AutonomiaG /= 0.9085;
             }
             
+            //Mudar a autonomia de acordo com o pedido
             do {
                 Console.WriteLine("[3] Autonomia original\n[2] Autonomia com decrescimo de 7,25%\n[1] Autonomia com decrescimo de 9,15%\nQual o nivel do pneu?");
                 Pneu = Console.ReadLine();
@@ -238,6 +248,7 @@ namespace Veiculo {
                 AutonomiaG -= AutonomiaG * 0.0915;
             }
         }
+        //Metodo para encher o tanque com qualquer tipo de combustivel
         public void EncherTanque() {
             if(Flex == true) {
                 string num;
@@ -255,6 +266,7 @@ namespace Veiculo {
             }
             QtdCombustivel += CapacidadeTanque - QtdCombustivel;
         }
+        //Mostrar os dados do veiculo
         public void MostrarVeiculo() {
             Console.WriteLine($"Marca: {Marca}\nModelo: {Modelo}\nPlaca: {Placa}\nAno: {Ano}"
                 + $"\nCapacidade do tanque: {CapacidadeTanque} Litros");

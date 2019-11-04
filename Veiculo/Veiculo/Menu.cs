@@ -53,12 +53,14 @@ namespace Veiculo {
                             Console.ResetColor();
                             Console.ReadLine();
                         }
+                        //Abastece o carro flex
                         else if (veiculo.Flex)
                             veiculo.AbastecerFlex();
+                        //Abastece os outros tipos
                         else
                             veiculo.Abastecer();
                         break;
-                    //Mostrar as informações do veiculo
+                    //Função para calibrar o pneu do veiculo 
                     case "4":
                         if (veiculo == null) {
                             Console.ForegroundColor = ConsoleColor.Red;
@@ -69,6 +71,7 @@ namespace Veiculo {
                         else 
                             veiculo.CalibrarPneu();
                         break;
+                    //Função para mostrar todas as informações do veiculo
                     case "5":
                         if (veiculo == null) {
                             Console.ForegroundColor = ConsoleColor.Red;
