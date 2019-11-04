@@ -248,6 +248,9 @@ namespace Veiculo {
                 AutonomiaG -= AutonomiaG * 0.0915;
             }
         }
+        public void DesgastePneu() {
+
+        }
         //Metodo para encher o tanque com qualquer tipo de combustivel
         public void EncherTanque() {
             if(Flex == true) {
