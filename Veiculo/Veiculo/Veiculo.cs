@@ -9,7 +9,7 @@ namespace Veiculo {
         public string Ano { get; private set; }
         public uint CapacidadeTanque { get; private set; }
         public string TipoCombustivel { get; private set; }
-        public bool Flex { get; set; }
+        public bool Flex { get; private set; }
         public double AutonomiaG { get; set; }
         public double AutonomiaA { get; set; }
         public double QtdCombustivel { get; set; }
@@ -149,7 +149,7 @@ namespace Veiculo {
                 AutonomiaA -= AutonomiaA * 0.0725;
                 AutonomiaG -= AutonomiaG * 0.0725;
             }
-            if (Pneu == "1") {
+            else if (Pneu == "1") {
                 AutonomiaA -= AutonomiaA * 0.0915;
                 AutonomiaG -= AutonomiaG * 0.0915;
             }
@@ -213,6 +213,33 @@ namespace Veiculo {
                 while (abastecer == 3000);
         }
         public void CalibrarPneu() {
+            if(Pneu == "2") {
+                AutonomiaA /= 0.9275;
+                AutonomiaG /= 0.9275;
+            }
+            else if(Pneu == "1") {
+                AutonomiaA /= 0.9085;
+                AutonomiaG /= 0.9085;
+            }
+            
+            do {
+                Console.WriteLine("Qual o nivel do pneu?");
+                Pneu = Console.ReadLine();
+                if (Pneu != "1" && Pneu != "2" && Pneu != "3")
+                    Console.WriteLine("\nValor invalido, Digite um numero de 1 a 3\n");
+            }
+            while (!Regex.IsMatch(Pneu, "^[1-3]{1}$"));
+
+            if (Pneu == "2") {
+                AutonomiaA -= AutonomiaA * 0.0725;
+                AutonomiaG -= AutonomiaG * 0.0725;
+            }
+            if (Pneu == "1") {
+                AutonomiaA -= AutonomiaA * 0.0915;
+                AutonomiaG -= AutonomiaG * 0.0915;
+            }
+        }
+        public void EncherTanque() {
 
         }
         public override string ToString() {

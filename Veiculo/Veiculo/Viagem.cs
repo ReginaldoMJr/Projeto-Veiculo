@@ -17,9 +17,6 @@ namespace Veiculo {
             while (!Regex.IsMatch(Cli, "^[SN]{1}$"));
             if (Cli == "S")
                 Clima = true;
-            else
-                Clima = false;
-
             if (Clima == true) {
                 veiculo.AutonomiaA -= veiculo.AutonomiaA * 0.135;
                 veiculo.AutonomiaG -= veiculo.AutonomiaG * 0.12;
@@ -46,6 +43,8 @@ namespace Veiculo {
                         if (veiculo.QtdGasolina <= 0 && viagem != 0) {
                             Console.WriteLine($"Faltam {viagem} KM");
                             veiculo.AbastecerFlex();
+                            veiculo.CalibrarPneu();
+                            CalculoClima(veiculo);
                         }
                     }
                 }
@@ -70,6 +69,8 @@ namespace Veiculo {
                     if (veiculo.QtdCombustivel <= 0 && viagem > 0) {
                         Console.WriteLine($"Faltam {viagem} KM");
                         veiculo.Abastecer();
+                        veiculo.CalibrarPneu();
+                        CalculoClima(veiculo);
                     }
                 }
                 while (viagem > 0);
@@ -86,13 +87,16 @@ namespace Veiculo {
                         viagem -= veiculo.QtdCombustivel * veiculo.AutonomiaG;
                         veiculo.QtdCombustivel = 0;
                     }
-                    else if (veiculo.QtdCombustivel * veiculo.AutonomiaG > viagem) {
+                    if (veiculo.QtdCombustivel * veiculo.AutonomiaG > viagem) {
                         veiculo.QtdCombustivel -= viagem / veiculo.AutonomiaG;
                         viagem = 0;
                     }
                     if (veiculo.QtdCombustivel <= 0 && viagem != 0) {
                         Console.WriteLine($"Faltam {viagem} KM");
                         veiculo.Abastecer();
+                        veiculo.CalibrarPneu();
+                        if (Clima)
+                            CalculoClima(veiculo);
                     }
                 }
                 while (viagem > 0);
@@ -103,6 +107,10 @@ namespace Veiculo {
                     Console.ReadLine();
                 }
             }
+        }
+        public void CalculoClima(Veiculo veiculo) {
+            veiculo.AutonomiaA -= veiculo.AutonomiaA * 0.135;
+            veiculo.AutonomiaG -= veiculo.AutonomiaG * 0.12;
         }
     }
 }
