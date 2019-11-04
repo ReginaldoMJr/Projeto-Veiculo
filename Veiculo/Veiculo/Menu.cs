@@ -66,10 +66,8 @@ namespace Veiculo {
                             Console.ResetColor();
                             Console.ReadLine();
                         }
-                        else {
-                            Console.WriteLine(veiculo);
-                            Console.ReadLine();
-                        }
+                        else 
+                            veiculo.CalibrarPneu();
                         break;
                     case "5":
                         if (veiculo == null) {
@@ -78,8 +76,10 @@ namespace Veiculo {
                             Console.ResetColor();
                             Console.ReadLine();
                         }
-                        else 
-                            veiculo.CalibrarPneu();
+                        else {
+                            veiculo.MostrarVeiculo();
+                            Console.ReadLine();
+                        }
                         break;
                     //Sair do programa
                     case "0":

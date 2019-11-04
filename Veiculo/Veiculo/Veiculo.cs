@@ -44,9 +44,9 @@ namespace Veiculo {
             while (Modelo == null);
 
             do {
-                Console.Write("Digite a placa do veiculo: ");
+                Console.Write("Digite a placa do veiculo (Modelo: BRA-6679): ");
                 Placa = Console.ReadLine();
-                if (Regex.IsMatch(Placa, "^[A-Z0-9-]$")) { //validação da placa
+                if (!Regex.IsMatch(Placa, "^[A-Z]{3}-[0-9]{4}$")) { //validação da placa
                     Console.WriteLine("\nPlaca invalida, digite novamente\n");
                     Placa = null;
                 }
@@ -54,9 +54,9 @@ namespace Veiculo {
             while (Placa == null);
 
             do {
-                Console.Write("Digite o ano do veiculo: ");
+                Console.Write("Digite o ano do veiculo (Entre 1900 até 2020): ");
                 Ano = Console.ReadLine();
-                if (Regex.IsMatch(Ano, "^[0-9]{4}$") == false || int.Parse(Ano) > 2020) { //validação do ano
+                if (Regex.IsMatch(Ano, "^[0-9]{4}$") == false || int.Parse(Ano) > 2020 || int.Parse(Ano) < 1900) { //validação do ano
                     Console.WriteLine("\nAno invalido, Digite novamente\n");
                     Ano = null;
                 }
@@ -93,7 +93,7 @@ namespace Veiculo {
                     uint.TryParse(Console.ReadLine(), out result);
                     if (result != 0)
                         AutonomiaA = result;
-                    if (result == 0)
+                    else if (result == 0)
                         Console.WriteLine("Autonomia invalida, digite novamente");
                 }
                 while (result == 0);
@@ -103,8 +103,8 @@ namespace Veiculo {
                     Console.Write("Digite quantos km o veiculo faz por litro de gasolina: ");
                     uint.TryParse(Console.ReadLine(), out result2);
                     if (result2 != 0)
-                        AutonomiaG = result;
-                    if (result2 == 0)
+                        AutonomiaG = result2;
+                    else if (result2 == 0)
                         Console.WriteLine("Autonomia invalida, digite novamente");
                 }
                 while (result2 == 0);
@@ -118,7 +118,7 @@ namespace Veiculo {
                     uint.TryParse(Console.ReadLine(), out result);
                     if (result != 0)
                         AutonomiaA = result;
-                    if (result == 0)
+                    else if (result == 0)
                         Console.WriteLine("Autonomia invalida, digite novamente");
                 }
                 while (result == 0);
@@ -132,7 +132,7 @@ namespace Veiculo {
                     uint.TryParse(Console.ReadLine(), out result);
                     if (result != 0)
                         AutonomiaG = result;
-                    if (result == 0)
+                    else if (result == 0)
                         Console.WriteLine("Autonomia invalida, digite novamente");
                 }
                 while (result == 0);
@@ -158,14 +158,13 @@ namespace Veiculo {
         //Abastecer se o tipo for flex
         public void AbastecerFlex() {
             uint abastecer;
-            int num;
             Console.WriteLine("[1] Gasolina");
             Console.WriteLine("[2] Alcool");
-            int.TryParse(Console.ReadLine(), out num);
+            int.TryParse(Console.ReadLine(), out int num);
             //Abastecer Gasolina em um carro flex
             if (num == 1) {
                 do {
-                    double QtdCombustivel = QtdAlcool + QtdGasolina;
+                    QtdCombustivel = QtdAlcool + QtdGasolina;
                     Console.WriteLine($"quantidade de combustivel: {QtdCombustivel}/{CapacidadeTanque}");
                     Console.WriteLine("Quantos litros deseja abastecer?");
                     uint.TryParse(Console.ReadLine(), out abastecer);
@@ -223,7 +222,7 @@ namespace Veiculo {
             }
             
             do {
-                Console.WriteLine("[3] Autonomia original\n[2] Autonomia com decrescimo de 7,25%\n[3] Autonomia com decrescimo de 9,15%\nQual o nivel do pneu?");
+                Console.WriteLine("[3] Autonomia original\n[2] Autonomia com decrescimo de 7,25%\n[1] Autonomia com decrescimo de 9,15%\nQual o nivel do pneu?");
                 Pneu = Console.ReadLine();
                 if (Pneu != "1" && Pneu != "2" && Pneu != "3")
                     Console.WriteLine("\nValor invalido, Digite um numero de 1 a 3\n");
@@ -256,9 +255,16 @@ namespace Veiculo {
             }
             QtdCombustivel += CapacidadeTanque - QtdCombustivel;
         }
-        public override string ToString() {
-            return $"Marca: {Marca} -- Modelo: {Modelo} -- Placa: {Placa} -- Ano: {Ano}"
-                + $"\nCapacidade do tanque: {CapacidadeTanque} Litros -- Tipo de Combustivel: {TipoCombustivel}";
+        public void MostrarVeiculo() {
+            Console.WriteLine($"Marca: {Marca}\nModelo: {Modelo}\nPlaca: {Placa}\nAno: {Ano}"
+                + $"\nCapacidade do tanque: {CapacidadeTanque} Litros");
+            if(Flex == true) 
+                Console.WriteLine($"Tipo de combustivel: Alcool e Gasolina\nAutonomia Gasolina: {AutonomiaG}\nAutonomia Alcool {AutonomiaA}\nQuantidade de Gasolina: {QtdGasolina}\nQuantidade de Alcool: {QtdAlcool}");
+            else if(TipoCombustivel == "Gasolina")
+                Console.WriteLine($"Tipo de combustivel: {TipoCombustivel}\nAutonomia: {AutonomiaG}\nQuantidade de Combustivel: {QtdCombustivel}");
+            else
+                Console.WriteLine($"Tipo de combustivel: {TipoCombustivel}\nAutonomia: {AutonomiaA}\nQuantidade de Combustivel: {QtdCombustivel}");
+
         }
     }
 }
