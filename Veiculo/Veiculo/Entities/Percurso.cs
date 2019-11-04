@@ -2,8 +2,8 @@
 using System.Text.RegularExpressions;
 
 namespace Veiculo {
-    class Viagem {
-        public bool Clima { get; set; }
+    class Percurso {
+        public string Clima { get; set; }
         public double Trajeto { get; set; }
 
         //Metodo para dirigir um veiculo
@@ -22,18 +22,13 @@ namespace Veiculo {
             while (Trajeto == 0);
             
             //Dar valor para o clima da viagem e validar
-            string Cli;
             do {
-                Console.Write("O clima esta ruim? (S / N): ");
-                Cli = Console.ReadLine().ToUpper();
+                Console.Write("[1] Sol (autonomia padrao)\n[2] Chovendo(12% a menos de autonomia)\n[3] Nevando(19% a menos de autonomia)\nComo esta o clima?: ");
+                Clima = Console.ReadLine().ToUpper();
             }
-            while (!Regex.IsMatch(Cli, "^[SN]{1}$"));
-            if (Cli == "S")
-                Clima = true;
-            //Se o clima estiver ruim, retirar uma porcentagem de autonomia dependendo do combustivel
-            if (Clima == true) {
-                CalculoClima(veiculo);
-            }
+            while (!Regex.IsMatch(Clima, "^[123]{1}$"));
+            if (Clima == "2" || Clima == "3")
+                CalculoClima(veiculo, Clima);
             //Dirigir se for Flex
             if (veiculo.Flex) {
                 do {
@@ -60,8 +55,10 @@ namespace Veiculo {
                             Console.WriteLine("Deseja calibrar o pneu? Se sim, aperte enter, ou aperte esc para continuar a viagem");
                             if (Console.ReadKey().Key == ConsoleKey.Enter)
                                 veiculo.CalibrarPneu();
-                            if (Clima)
-                                CalculoClima(veiculo);
+                            //TODO: Usar o metodo de clima a cada 100 km
+                            /*int cli = new Random().Next(1, 3);
+                            if (cli.ToString() != Clima)
+                                CalculoClima(veiculo,Clima);*/
                         }
                     }
                 }
@@ -90,8 +87,8 @@ namespace Veiculo {
                         Console.WriteLine("Deseja calibrar o pneu? Se sim, aperte enter, ou aperte esc para continuar a viagem");
                         if (Console.ReadKey().Key == ConsoleKey.Enter)
                             veiculo.CalibrarPneu();
-                        if (Clima)
-                            CalculoClima(veiculo);
+                        /*if (Clima)
+                            CalculoClima(veiculo);*/
                     }
                 }
                 while (Trajeto > 0);
@@ -119,8 +116,8 @@ namespace Veiculo {
                         Console.WriteLine("Deseja calibrar o pneu? Se sim, aperte enter, ou aperte esc para continuar a viagem");
                         if (Console.ReadKey().Key == ConsoleKey.Enter)
                             veiculo.CalibrarPneu();
-                        if (Clima)
-                            CalculoClima(veiculo);
+                        /*if (Clima)
+                            CalculoClima(veiculo);*/
                     }
                 }
                 while (Trajeto > 0);
@@ -133,9 +130,15 @@ namespace Veiculo {
             }
         }
         //Fazer o calculo de clima
-        public void CalculoClima(Veiculo veiculo) {
-            veiculo.AutonomiaA -= veiculo.AutonomiaA * 0.135;
-            veiculo.AutonomiaG -= veiculo.AutonomiaG * 0.12;
+        public void CalculoClima(Veiculo veiculo, string Clima) {
+            if (Clima == "2") {
+                veiculo.AutonomiaG -= veiculo.AutonomiaG * 0.12;
+                veiculo.AutonomiaA -= veiculo.AutonomiaG * 0.30;
+            }
+            if(Clima == "3") {
+                veiculo.AutonomiaG -= veiculo.AutonomiaG * 0.19;
+                veiculo.AutonomiaA -= veiculo.AutonomiaG * 0.30;
+            }
         }
     }
 }

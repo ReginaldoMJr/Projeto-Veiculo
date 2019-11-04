@@ -41,8 +41,8 @@ namespace Veiculo {
                             Console.ReadLine();
                         }
                         else {
-                            Viagem viagem = new Viagem();
-                            viagem.Dirigir(veiculo);
+                            Percurso percurso = new Percurso();
+                            percurso.Dirigir(veiculo);
                         }
                         break;
                     //Função para abastecer o veiculo
