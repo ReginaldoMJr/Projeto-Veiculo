@@ -9,9 +9,10 @@ namespace Veiculo {
         //Metodo para dirigir um veiculo
         public void Dirigir(Veiculo veiculo) {
             //Dar valor para o Trajeto da viagem e validar
+            double viagem;
             do {
                 Console.Write("Digite o tamanho da viagem: ");
-                double.TryParse(Console.ReadLine(), out double viagem);
+                double.TryParse(Console.ReadLine(), out viagem);
                 if (viagem < 1 || viagem > 10000) {
                     Console.WriteLine("Valor de viagem invalido, Digite novamente");
                     Trajeto = 0;
@@ -31,113 +32,112 @@ namespace Veiculo {
                 CalculoClima(veiculo, Clima);
             //Dirigir se for Flex
             if (veiculo.Flex) {
-                do {
-                    if (veiculo.QtdAlcool * veiculo.AutonomiaA <= Trajeto) {
-                        Trajeto -= veiculo.QtdAlcool * veiculo.AutonomiaA;
-                        veiculo.QtdAlcool = 0;
+                for(double km = 0; km <= Trajeto; km = Math.Round((km + 0.1), 1)) {
+                    if (veiculo.QtdGasolina == 0 && veiculo.QtdAlcool == 0 && viagem != 0) {
+                        km = Math.Round((km - 0.1), 2);
+                        Console.WriteLine($"Faltam {viagem} KM");
+                        veiculo.AbastecerFlex();
+                        Console.WriteLine("Deseja calibrar o pneu? Se sim, aperte enter, ou aperte esc para continuar a viagem");
+                        if (Console.ReadKey().Key == ConsoleKey.Enter)
+                            veiculo.CalibrarPneu();
                     }
-                    else if (veiculo.QtdAlcool * veiculo.AutonomiaA > Trajeto) {
-                        veiculo.QtdAlcool -= Trajeto / veiculo.AutonomiaA;
-                        Trajeto = 0;
+                    else if (viagem == 0) {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
+                        Console.ResetColor();
+                        Console.ReadLine();
                     }
-                    if (veiculo.QtdAlcool == 0) {
-                        if (veiculo.QtdGasolina * veiculo.AutonomiaG <= Trajeto) {
-                            Trajeto -= veiculo.QtdGasolina * veiculo.AutonomiaG;
-                            veiculo.QtdGasolina = 0;
+                    else {
+                        if(veiculo.QtdAlcool > 0) {
+                            veiculo.QtdAlcool = Math.Round((veiculo.QtdAlcool - (0.1 / veiculo.AutonomiaA)), 2);
+                            viagem = Math.Round((viagem - 0.1), 1);
                         }
-                        else if (veiculo.QtdGasolina * veiculo.AutonomiaG > Trajeto) {
-                            veiculo.QtdGasolina -= Trajeto / veiculo.AutonomiaG;
-                            Trajeto = 0;
+                        else {
+                            veiculo.QtdGasolina = Math.Round((veiculo.QtdGasolina - (0.1 / veiculo.AutonomiaG)), 2);
+                            viagem = Math.Round((viagem - 0.1), 1);
                         }
-                        if (veiculo.QtdGasolina <= 0 && Trajeto != 0) {
-                            Console.WriteLine($"Faltam {Trajeto} KM");
-                            veiculo.AbastecerFlex();
-                            Console.WriteLine("Deseja calibrar o pneu? Se sim, aperte enter, ou aperte esc para continuar a viagem");
-                            if (Console.ReadKey().Key == ConsoleKey.Enter)
-                                veiculo.CalibrarPneu();
+                    }
+                }
+                
                             //TODO: Usar o metodo de clima a cada 100 km
                             /*int cli = new Random().Next(1, 3);
                             if (cli.ToString() != Clima)
                                 CalculoClima(veiculo,Clima);*/
                         }
-                    }
-                }
-                while (Trajeto > 0);
-                if (Trajeto == 0) {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
-                    Console.ResetColor();
-                    Console.ReadLine();
-                }
-            }
+            
             //Dirigir se for Alcool
             else if (veiculo.TipoCombustivel == "Alcool") {
-                do {
-                    if (veiculo.QtdCombustivel * veiculo.AutonomiaA <= Trajeto) {
-                        Trajeto -= veiculo.QtdCombustivel * veiculo.AutonomiaA;
-                        veiculo.QtdCombustivel = 0;
-                    }
-                    else if (veiculo.QtdCombustivel * veiculo.AutonomiaA > Trajeto) {
-                        veiculo.QtdCombustivel -= Trajeto / veiculo.AutonomiaA;
-                        Trajeto = 0;
-                    }
-                    if (veiculo.QtdCombustivel <= 0 && Trajeto > 0) {
-                        Console.WriteLine($"Faltam {Trajeto} KM");
+                for (double km = 0; km <= Trajeto; km = Math.Round((km + 0.1), 1)) {
+                    if (veiculo.QtdCombustivel <= 0 && viagem != 0) {
+                        km = Math.Round((km - 0.1), 2);
+                        Console.WriteLine($"Faltam {viagem} KM");
                         veiculo.Abastecer();
                         Console.WriteLine("Deseja calibrar o pneu? Se sim, aperte enter, ou aperte esc para continuar a viagem");
                         if (Console.ReadKey().Key == ConsoleKey.Enter)
                             veiculo.CalibrarPneu();
-                        /*if (Clima)
-                            CalculoClima(veiculo);*/
                     }
-                }
-                while (Trajeto > 0);
-                if (Trajeto == 0) {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
-                    Console.ResetColor();
-                    Console.ReadLine();
+                    else if (viagem == 0) {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
+                        Console.ResetColor();
+                        Console.ReadLine();
+                    }
+                    else {
+                        veiculo.QtdCombustivel = Math.Round((veiculo.QtdCombustivel - (0.1 / veiculo.AutonomiaA)), 2);
+                        viagem = Math.Round((viagem - 0.1), 1);
+                    }
                 }
             }
             //Dirigir se for Gasolina
             else if (veiculo.TipoCombustivel == "Gasolina") {
-                do {
-                    if (veiculo.QtdCombustivel * veiculo.AutonomiaG <= Trajeto) {
-                        Trajeto -= veiculo.QtdCombustivel * veiculo.AutonomiaG;
-                        veiculo.QtdCombustivel = 0;
-                    }
-                    if (veiculo.QtdCombustivel * veiculo.AutonomiaG > Trajeto) {
-                        veiculo.QtdCombustivel -= Trajeto / veiculo.AutonomiaG;
-                        Trajeto = 0;
-                    }
-                    if (veiculo.QtdCombustivel <= 0 && Trajeto != 0) {
-                        Console.WriteLine($"Faltam {Trajeto} KM");
+                for (double km = 0; km <= Trajeto; km = Math.Round((km + 0.1),1)) {
+                    if (veiculo.QtdCombustivel <= 0 && viagem != 0) {
+                        km = Math.Round((km - 0.1),2);
+                        Console.WriteLine($"Faltam {viagem} KM");
                         veiculo.Abastecer();
                         Console.WriteLine("Deseja calibrar o pneu? Se sim, aperte enter, ou aperte esc para continuar a viagem");
                         if (Console.ReadKey().Key == ConsoleKey.Enter)
                             veiculo.CalibrarPneu();
-                        /*if (Clima)
-                            CalculoClima(veiculo);*/
                     }
-                }
-                while (Trajeto > 0);
-                if (Trajeto == 0) {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
-                    Console.ResetColor();
-                    Console.ReadLine();
+                    else if (viagem == 0) {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
+                        Console.ResetColor();
+                        Console.ReadLine();
+                    }
+                    else {
+                        veiculo.QtdCombustivel = Math.Round((veiculo.QtdCombustivel - (0.1 / veiculo.AutonomiaG)),2);
+                        viagem = Math.Round((viagem - 0.1),1);
+                    }
+
                 }
             }
         }
         //Fazer o calculo de clima
         public void CalculoClima(Veiculo veiculo, string Clima) {
             if (Clima == "2") {
-                veiculo.AutonomiaG -= veiculo.AutonomiaG * 0.12;
-                veiculo.AutonomiaA -= veiculo.AutonomiaG * 0.30;
+                if (veiculo.Flex) {
+                    veiculo.AutonomiaG -= veiculo.AutonomiaG * 0.12;
+                    veiculo.AutonomiaA -= veiculo.AutonomiaG * 0.30;
+                }
+                else if (veiculo.TipoCombustivel == "Gasolina")
+                    veiculo.AutonomiaG -= veiculo.AutonomiaG * 0.12;
+                else {
+                    veiculo.AutonomiaA -= veiculo.AutonomiaA * 0.12;
+                    veiculo.AutonomiaA -= veiculo.AutonomiaA * 0.30;
+                }
             }
             if(Clima == "3") {
-                veiculo.AutonomiaG -= veiculo.AutonomiaG * 0.19;
-                veiculo.AutonomiaA -= veiculo.AutonomiaG * 0.30;
+                if (veiculo.Flex) {
+                    veiculo.AutonomiaG -= veiculo.AutonomiaG * 0.19;
+                    veiculo.AutonomiaA -= veiculo.AutonomiaG * 0.30;
+                }
+                else if (veiculo.TipoCombustivel == "Gasolina")
+                    veiculo.AutonomiaG -= veiculo.AutonomiaG * 0.19;
+                else {
+                    veiculo.AutonomiaA -= veiculo.AutonomiaA * 0.19;
+                    veiculo.AutonomiaA -= veiculo.AutonomiaA * 0.30;
+                }
             }
         }
     }

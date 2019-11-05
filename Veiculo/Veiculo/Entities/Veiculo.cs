@@ -174,7 +174,7 @@ namespace Veiculo {
                     Console.WriteLine($"quantidade de combustivel: {QtdCombustivel}/{CapacidadeTanque}");
                     Console.WriteLine("Quantos litros deseja abastecer?");
                     uint.TryParse(Console.ReadLine(), out abastecer);
-                    if (QtdGasolina + abastecer <= CapacidadeTanque)
+                    if (QtdGasolina + QtdAlcool + abastecer <= CapacidadeTanque)
                         QtdGasolina += abastecer;
                     else {
                         Console.WriteLine("Voce não pode abastecer mais que a quantidade do tanque");
@@ -186,7 +186,7 @@ namespace Veiculo {
             //Abastecer Alcool no carro flex
             if (num == 2) {
                 do {
-                    double QtdCombustivel = QtdAlcool + QtdGasolina;
+                    QtdCombustivel = QtdAlcool + QtdGasolina;
                     Console.WriteLine($"quantidade de combustivel: {QtdCombustivel}/{CapacidadeTanque}");
                     Console.WriteLine("Quantos litros deseja abastecer?");
                     uint.TryParse(Console.ReadLine(), out abastecer);
