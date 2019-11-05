@@ -3,7 +3,8 @@ using System.Text.RegularExpressions;
 
 namespace Veiculo {
     class Menu {
-        public void menu(Veiculo veiculo) {
+        public static void menu(Veiculo veiculo, AgenciaViagem agenciaViagem) {
+            
             string num;
             do {
                 do {
@@ -12,10 +13,11 @@ namespace Veiculo {
                     Console.WriteLine("------------- Menu -------------");
                     Console.ResetColor();
                     Console.WriteLine("[1] Cadastrar carro");
-                    Console.WriteLine("[2] Dirigir");
-                    Console.WriteLine("[3] Abastecer");
-                    Console.WriteLine("[4] Calibrar Pneu");
-                    Console.WriteLine("[5] Exibir informações do veiculo");
+                    Console.WriteLine("[2] Cadastrar viagem");
+                    Console.WriteLine("[3] Dirigir");
+                    Console.WriteLine("[4] Abastecer");
+                    Console.WriteLine("[5] Calibrar Pneu");
+                    Console.WriteLine("[6] Exibir informações do veiculo");
                     Console.WriteLine("[0] Sair do programa");
                     num = Console.ReadLine();
                     if(Regex.IsMatch(num, "^[0-5]{1}$") == false) {
@@ -25,28 +27,22 @@ namespace Veiculo {
                 }
                 while (num == "6");
                 switch (num) {
-                    //Faz o cadastro do veiculo
-                    case "1":
+                    case "1": //Faz o cadastro do veiculo
                         Console.Clear();
                         veiculo = new Veiculo();
                         veiculo.CadastrarVeiculo();
+                        agenciaViagem.Veiculos.Add(veiculo);
                         break;
-                    //Função dirigir para todos os tipos de combustivel
-                    case "2":
+                    case "2": //Função para cadastrar um percurso
                         Console.Clear();
-                        if (veiculo == null) {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Não tem nenhum carro, aperte enter para voltar ao menu");
-                            Console.ResetColor();
-                            Console.ReadLine();
-                        }
-                        else {
-                            Percurso percurso = new Percurso();
-                            percurso.Dirigir(veiculo);
-                        }
+                        Percurso percurso = new Percurso();
+                        agenciaViagem.Percursos.Add(percurso);
+                        break;
+                    case "3":
+                        Console.Clear();
                         break;
                     //Função para abastecer o veiculo
-                    case "3":
+                    case "4":
                         if (veiculo == null) {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Não tem nenhum carro, aperte enter para voltar ao menu");
@@ -61,7 +57,7 @@ namespace Veiculo {
                             veiculo.Abastecer();
                         break;
                     //Função para calibrar o pneu do veiculo 
-                    case "4":
+                    case "5":
                         if (veiculo == null) {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Não tem nenhum carro, aperte enter para voltar ao menu");
@@ -72,7 +68,7 @@ namespace Veiculo {
                             veiculo.CalibrarPneu();
                         break;
                     //Função para mostrar todas as informações do veiculo
-                    case "5":
+                    case "6":
                         if (veiculo == null) {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Não tem nenhum carro, aperte enter para voltar ao menu");
