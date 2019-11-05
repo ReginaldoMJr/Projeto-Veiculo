@@ -3,10 +3,14 @@ using System.Text.RegularExpressions;
 
 namespace Veiculo {
     class Percurso {
+        public uint Id { get; set; }
         public string Clima { get; set; }
         public double Trajeto { get; set; }
 
-        
+        public void CadastrarPercurso() {
+            Id = new Random().Next()
+        }
+
         //Metodo para dirigir um veiculo
         public void Dirigir(Veiculo veiculo) {
             //Dar valor para o Trajeto da viagem e validar
