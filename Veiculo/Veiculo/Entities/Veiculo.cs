@@ -253,8 +253,8 @@ namespace Veiculo {
         }
         //Metodo para encher o tanque com qualquer tipo de combustivel
         public void EncherTanque() {
-            if(Flex == true) {
-                string num;
+            string num;
+            if (Flex == true) {
                 do {
                     Console.WriteLine("Deseja encher o tanque com qual combustivel?\n[1] Gasolina\n[2] Alcool\n[3] Não encher o tanque");
                     num = Console.ReadLine();
@@ -267,7 +267,17 @@ namespace Veiculo {
                 else if (num == "3")
                     AbastecerFlex();
             }
-            QtdCombustivel += CapacidadeTanque - QtdCombustivel;
+            else {
+                do {
+                    Console.WriteLine("[1] Encher o tanque\n[2] Encher outra quantia");
+                    num = Console.ReadLine();
+                }
+                while (!Regex.IsMatch(num, "^[12]{1}$"));
+                if (num == "1")
+                    QtdCombustivel += CapacidadeTanque - QtdCombustivel;
+                else
+                    Abastecer();
+            }
         }
         //Mostrar os dados do veiculo
         public void MostrarVeiculo() {
