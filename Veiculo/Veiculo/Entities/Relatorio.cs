@@ -4,8 +4,7 @@ using System.Text;
 
 namespace Veiculo {
     class Relatorio {
-        public Veiculo Veiculo { get; set; }
-        public Percurso Percurso { get; set; }
+        public CarroPercurso CarroPercurso { get; set; }
         public double KmPercorrida { get; set; }
         public uint QtdAbastecimentos { get; set; }
         public uint QtdCalibragens { get; set; }
