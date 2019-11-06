@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Veiculo {
     class Menu {
-        public static void menu(Veiculo veiculo, AgenciaViagem agenciaViagem) {
+        public static void menu(AgenciaViagem agenciaViagem) {
             
             string num;
             do {

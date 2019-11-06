@@ -43,11 +43,6 @@ namespace Veiculo {
                         }
                     }
                 }
-
-                //TODO: Usar o metodo de clima a cada 100 km
-                /*int cli = new Random().Next(1, 3);
-                if (cli.ToString() != Clima)
-                    CalculoClima(veiculo,Clima);*/
             }
             //Dirigir se for Alcool ou Gasolina
             else {
