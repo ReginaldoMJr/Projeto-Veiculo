@@ -10,7 +10,9 @@ namespace Veiculo {
         public uint CapacidadeTanque { get; private set; }
         public string TipoCombustivel { get; private set; }
         public bool Flex { get; private set; }
+        public double AutonomiaOriginalG { get; set; }
         public double AutonomiaG { get; set; }
+        public double AutonomiaOriginalA { get; set; }
         public double AutonomiaA { get; set; }
         public double QtdCombustivel { get; set; }
         public double QtdGasolina { get; set; }

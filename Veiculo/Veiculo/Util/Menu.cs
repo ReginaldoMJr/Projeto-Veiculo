@@ -14,6 +14,7 @@ namespace Veiculo {
                     Console.ResetColor();
                     Console.WriteLine("[1] Cadastrar carro");
                     Console.WriteLine("[2] Cadastrar viagem");
+                    Console.WriteLine("[3] Atribuir um carro a uma viagem");
                     Console.WriteLine("[3] Dirigir");
                     Console.WriteLine("[4] Abastecer");
                     Console.WriteLine("[5] Calibrar Pneu");
@@ -39,6 +40,8 @@ namespace Veiculo {
                         agenciaViagem.Percursos.Add(percurso);
                         break;
                     case "3":
+
+                        CarroPercurso carroPercurso = agenciaViagem.CarrosPercursos.Find(x => x.)
                         Console.Clear();
                         break;
                     //Função para abastecer o veiculo
