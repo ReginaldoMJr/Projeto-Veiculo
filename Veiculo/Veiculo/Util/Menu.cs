@@ -4,7 +4,6 @@ using System.Text.RegularExpressions;
 namespace Veiculo {
     class Menu {
         public static void menu(AgenciaViagem agenciaViagem) {
-            
             string num;
             do {
                 do {
@@ -15,70 +14,90 @@ namespace Veiculo {
                     Console.WriteLine("[1] Cadastrar carro");
                     Console.WriteLine("[2] Cadastrar viagem");
                     Console.WriteLine("[3] Atribuir um carro a uma viagem");
-                    Console.WriteLine("[3] Dirigir");
-                    Console.WriteLine("[4] Abastecer");
-                    Console.WriteLine("[5] Calibrar Pneu");
-                    Console.WriteLine("[6] Exibir informações do veiculo");
+                    Console.WriteLine("[4] Dirigir");
+                    Console.WriteLine("[5] Abastecer");
+                    Console.WriteLine("[6] Calibrar Pneu");
+                    Console.WriteLine("[7] Exibir informações do veiculo");
                     Console.WriteLine("[0] Sair do programa");
                     num = Console.ReadLine();
-                    if(Regex.IsMatch(num, "^[0-5]{1}$") == false) {
+                    if(!Regex.IsMatch(num, "^[0-7]{1}$")) {
                         Console.WriteLine("Valor invalido, digite novamente");
-                        num = "6";
+                        num = "8";
                     }
                 }
-                while (num == "6");
+                while (num == "8");
+
                 switch (num) {
                     case "1": //Faz o cadastro do veiculo
                         Console.Clear();
-                        veiculo = new Veiculo();
+                        Veiculo veiculo = new Veiculo();
                         veiculo.CadastrarVeiculo();
                         agenciaViagem.Veiculos.Add(veiculo);
                         break;
                     case "2": //Função para cadastrar um percurso
                         Console.Clear();
                         Percurso percurso = new Percurso();
+                        percurso.CadastrarPercurso(agenciaViagem);
                         agenciaViagem.Percursos.Add(percurso);
                         break;
                     case "3":
-
-                        CarroPercurso carroPercurso = agenciaViagem.CarrosPercursos.Find(x => x.)
+                        Console.WriteLine("Digite a placa do carro:");
+                        string teste = Console.ReadLine();
+                        CarroPercurso carroPercurso = null;
+                        carroPercurso.Veiculo = agenciaViagem.Veiculos.Find(x => x.Placa == teste);
+                        Console.WriteLine("Digite o id da viagem");
+                        teste = Console.ReadLine();
+                        carroPercurso.Percurso = agenciaViagem.Percursos.Find(x => x.Id.ToString() == teste);
+                        agenciaViagem.CarroPercursos.Add(carroPercurso);
                         Console.Clear();
                         break;
                     //Função para abastecer o veiculo
                     case "4":
-                        if (veiculo == null) {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Não tem nenhum carro, aperte enter para voltar ao menu");
-                            Console.ResetColor();
-                            Console.ReadLine();
-                        }
-                        //Abastece o carro flex
-                        else if (veiculo.Flex)
-                            veiculo.AbastecerFlex();
-                        //Abastece os outros tipos
-                        else
-                            veiculo.Abastecer();
-                        break;
-                    //Função para calibrar o pneu do veiculo 
-                    case "5":
-                        if (veiculo == null) {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Não tem nenhum carro, aperte enter para voltar ao menu");
-                            Console.ResetColor();
-                            Console.ReadLine();
-                        }
-                        else 
-                            veiculo.CalibrarPneu();
-                        break;
-                    //Função para mostrar todas as informações do veiculo
-                    case "6":
-                        if (veiculo == null) {
+                        if (agenciaViagem.Veiculos.Count == 0) {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Não tem nenhum carro, aperte enter para voltar ao menu");
                             Console.ResetColor();
                             Console.ReadLine();
                         }
                         else {
+                            Console.WriteLine("Digite o id do carro:");
+                            teste = Console.ReadLine();
+                            veiculo = agenciaViagem.Veiculos.Find(x => x.Placa == teste);
+                            //Abastece o carro flex
+                            if (veiculo.Flex)
+                                veiculo.AbastecerFlex();
+                            //Abastece os outros tipos
+                            else
+                                veiculo.Abastecer();
+                        }
+                        break;
+                    //Função para calibrar o pneu do veiculo 
+                    case "5":
+                        if (agenciaViagem.Veiculos.Count == 0) {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Não tem nenhum carro, aperte enter para voltar ao menu");
+                            Console.ResetColor();
+                            Console.ReadLine();
+                        }
+                        else {
+                            Console.WriteLine("Digite o id do carro:");
+                            teste = Console.ReadLine();
+                            veiculo = agenciaViagem.Veiculos.Find(x => x.Placa == teste);
+                            veiculo.CalibrarPneu();
+                        }
+                        break;
+                    //Função para mostrar todas as informações do veiculo
+                    case "6":
+                        if (agenciaViagem.Veiculos.Count == 0) {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Não tem nenhum carro, aperte enter para voltar ao menu");
+                            Console.ResetColor();
+                            Console.ReadLine();
+                        }
+                        else {
+                            Console.WriteLine("Digite o id do carro:");
+                            teste = Console.ReadLine();
+                            veiculo = agenciaViagem.Veiculos.Find(x => x.Placa == teste);
                             veiculo.MostrarVeiculo();
                             Console.ReadLine();
                         }

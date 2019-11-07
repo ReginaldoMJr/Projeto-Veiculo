@@ -10,7 +10,7 @@ namespace Veiculo {
         public void CadastrarPercurso(AgenciaViagem agenciaViagem) {
 
             do Id = new Random().Next(1000, 9999);
-            while (agenciaViagem.Percursos.Exists(x => x.Id == Id) || agenciaViagem.CarrosPercursos.Exists(x => x.Percurso.Id == Id));
+            while (agenciaViagem.Percursos.Exists(x => x.Id == Id) || agenciaViagem.CarroPercursos.Exists(x => x.Percurso.Id == Id));
 
             double viagem;
             do {

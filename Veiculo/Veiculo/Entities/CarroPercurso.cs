@@ -5,9 +5,11 @@ namespace Veiculo {
     class CarroPercurso {
         public Veiculo Veiculo { get; set; }
         public Percurso Percurso { get; set; }
-        public Relatorio Relatorio { get; set; }
 
-        public void Dirigir() { 
+        public void Dirigir(AgenciaViagem agenciaViagem) {
+            Relatorio Relatorio = new Relatorio();
+            Relatorio.CarroPercurso.Veiculo = Veiculo;
+            Relatorio.CarroPercurso.Percurso = Percurso;
             //Dirigir se for Flex
             if (Veiculo.Flex) {
                 for (double km = 0; km <= Percurso.Trajeto; km = Math.Round((km + 0.1), 1)) {
@@ -71,6 +73,7 @@ namespace Veiculo {
                     }
                 }
             }
+            agenciaViagem.Relatorios.Add(Relatorio);
         }
         public void CalculoClima(Veiculo veiculo, string Clima) {
             if (Clima == "2") {
