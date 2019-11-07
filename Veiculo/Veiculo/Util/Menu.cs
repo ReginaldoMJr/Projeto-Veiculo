@@ -48,6 +48,11 @@ namespace Veiculo {
                             Console.ResetColor();
                             Console.ReadLine();
                         }
+                        else {
+                            string placa = Console.ReadLine();
+                            CarroPercurso carroPercurso = agenciaViagem.CarroPercursos.Find(x => x.Veiculo.Placa == placa);
+                            carroPercurso.Dirigir(agenciaViagem, carroPercurso);
+                        }
                         
                         break;
                     //Função para calibrar o pneu do veiculo 
@@ -59,10 +64,10 @@ namespace Veiculo {
                             Console.ReadLine();
                         }
                         else {
-                            Console.WriteLine("Digite o id do carro:");
+                            /*Console.WriteLine("Digite o id do carro:");
                             teste = Console.ReadLine();
                             veiculo = agenciaViagem.Veiculos.Find(x => x.Placa == teste);
-                            veiculo.CalibrarPneu();
+                            veiculo.CalibrarPneu();*/
                         }
                         break;
                     //Função para mostrar todas as informações do veiculo
@@ -74,11 +79,11 @@ namespace Veiculo {
                             Console.ReadLine();
                         }
                         else {
-                            Console.WriteLine("Digite o id do carro:");
+                            /*Console.WriteLine("Digite o id do carro:");
                             teste = Console.ReadLine();
                             veiculo = agenciaViagem.Veiculos.Find(x => x.Placa == teste);
                             veiculo.MostrarVeiculo();
-                            Console.ReadLine();
+                            Console.ReadLine();*/
                         }
                         break;
                     //Sair do programa

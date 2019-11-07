@@ -58,7 +58,6 @@ namespace Veiculo {
                 }
                 while (abastecer == 100000);
             }
-
         }
         //Abastecer os outros tipos
         public void Abastecer() {

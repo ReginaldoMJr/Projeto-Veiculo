@@ -1,20 +1,20 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 
 namespace Veiculo {
     class CarroPercurso {
         public Veiculo Veiculo { get; set; }
         public Percurso Percurso { get; set; }
 
-        public void Dirigir(AgenciaViagem agenciaViagem) {
+        public void Dirigir(AgenciaViagem agenciaViagem , CarroPercurso carroPercurso) {            
             Relatorio Relatorio = new Relatorio();
-            Relatorio.CarroPercurso.Veiculo = Veiculo;
-            Relatorio.CarroPercurso.Percurso = Percurso;
+            Relatorio.CarroPercurso = carroPercurso;
+            agenciaViagem.Relatorios.Add(Relatorio);
             //Dirigir se for Flex
             if (Veiculo.Flex) {
                 for (double km = 0; km <= Percurso.Trajeto; km = Math.Round((km + 0.1), 1)) {
                     if (Relatorio.KmPercorrida % 100 == 0) {
                         int cli = new Random().Next(1, 3);
+                        Relatorio.AlteracaoClimatica.Append
                         if (cli.ToString() != Percurso.Clima) {
                             Percurso.Clima = cli.ToString();
                             CalculoClima(Veiculo, Percurso.Clima);
@@ -29,6 +29,7 @@ namespace Veiculo {
                         km = Math.Round((km - 0.1), 2);
                     }
                     else if (km == Percurso.Trajeto) {
+                        agenciaViagem.CarroPercursos.Remove(carroPercurso);
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
                         Console.ResetColor();
@@ -49,6 +50,13 @@ namespace Veiculo {
             //Dirigir se for Alcool ou Gasolina
             else {
                 for (double km = 0; km <= Percurso.Trajeto; km = Math.Round((km + 0.1), 1)) {
+                    if (Relatorio.KmPercorrida % 100 == 0) {
+                        int cli = new Random().Next(1, 3);
+                        if (cli.ToString() != Percurso.Clima) {
+                            Percurso.Clima = cli.ToString();
+                            CalculoClima(Veiculo, Percurso.Clima);
+                        }
+                    }
                     if (Veiculo.QtdCombustivel <= 0 && km != Percurso.Trajeto) {
                         Console.WriteLine($"Faltam {Percurso.Trajeto - km} KM");
                         Veiculo.EncherTanque();
@@ -66,14 +74,15 @@ namespace Veiculo {
                     else {
                         if (Veiculo.TipoCombustivel == "Alcool") {
                             Veiculo.QtdCombustivel = Math.Round((Veiculo.QtdCombustivel - (0.1 / Veiculo.AutonomiaA)), 2);
+                            Relatorio.KmPercorrida = Math.Round((Relatorio.KmPercorrida + 0.1), 1);
                         }
                         else {
                             Veiculo.QtdCombustivel = Math.Round((Veiculo.QtdCombustivel - (0.1 / Veiculo.AutonomiaG)), 2);
+                            Relatorio.KmPercorrida = Math.Round((Relatorio.KmPercorrida + 0.1), 1);
                         }
                     }
                 }
             }
-            agenciaViagem.Relatorios.Add(Relatorio);
         }
         public void CalculoClima(Veiculo veiculo, string Clima) {
             if (Clima == "2") {
