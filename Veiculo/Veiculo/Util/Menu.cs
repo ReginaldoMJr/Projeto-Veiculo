@@ -30,46 +30,25 @@ namespace Veiculo {
                 switch (num) {
                     case "1": //Faz o cadastro do veiculo
                         Console.Clear();
-                        Veiculo veiculo = new Veiculo();
-                        veiculo.CadastrarVeiculo();
-                        agenciaViagem.Veiculos.Add(veiculo);
+                        agenciaViagem.CadastrarVeiculo();
                         break;
                     case "2": //Função para cadastrar um percurso
                         Console.Clear();
-                        Percurso percurso = new Percurso();
-                        percurso.CadastrarPercurso(agenciaViagem);
-                        agenciaViagem.Percursos.Add(percurso);
+                        agenciaViagem.CadastrarPercurso();
                         break;
                     case "3":
-                        Console.WriteLine("Digite a placa do carro:");
-                        string teste = Console.ReadLine();
-                        CarroPercurso carroPercurso = null;
-                        carroPercurso.Veiculo = agenciaViagem.Veiculos.Find(x => x.Placa == teste);
-                        Console.WriteLine("Digite o id da viagem");
-                        teste = Console.ReadLine();
-                        carroPercurso.Percurso = agenciaViagem.Percursos.Find(x => x.Id.ToString() == teste);
-                        agenciaViagem.CarroPercursos.Add(carroPercurso);
                         Console.Clear();
+                        agenciaViagem.CadastrarCarroPercurso();
                         break;
                     //Função para abastecer o veiculo
                     case "4":
-                        if (agenciaViagem.Veiculos.Count == 0) {
+                        if (agenciaViagem.CarroPercursos.Count == 0) {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.WriteLine("Não tem nenhum carro, aperte enter para voltar ao menu");
                             Console.ResetColor();
                             Console.ReadLine();
                         }
-                        else {
-                            Console.WriteLine("Digite o id do carro:");
-                            teste = Console.ReadLine();
-                            veiculo = agenciaViagem.Veiculos.Find(x => x.Placa == teste);
-                            //Abastece o carro flex
-                            if (veiculo.Flex)
-                                veiculo.AbastecerFlex();
-                            //Abastece os outros tipos
-                            else
-                                veiculo.Abastecer();
-                        }
+                        
                         break;
                     //Função para calibrar o pneu do veiculo 
                     case "5":
