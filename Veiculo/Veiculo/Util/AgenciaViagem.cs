@@ -180,6 +180,7 @@ namespace Veiculo {
             Percursos.Add(percurso);
         }
         public void CadastrarCarroPercurso() {
+            ExibirCarrosPercursos();
             CarroPercurso carroPercurso = new CarroPercurso();
             string verifica = Console.ReadLine();
             Veiculo veiculo = Veiculos.Find(x => x.Placa == verifica);
