@@ -16,8 +16,8 @@ namespace Veiculo {
             CarroPercurso.Veiculo.MostrarVeiculo();
             Console.Write("Percurso -> ");
             CarroPercurso.Percurso.MostrarPercurso();
-            Console.Write($"KM Percorridos: {KmPercorrida}\tQuantidade de abastecimentos: {QtdAbastecimentos}\nQuantidade de calibragens: {QtdCalibragens}\tLitros consumidos: {LitrosConsumidos}");
-            Console.WriteLine($"Desgaste do Pneu:\n{DesgastePneu.ToString()}");
+            Console.Write($"KM Percorridos: {KmPercorrida}\nQuantidade de abastecimentos: {QtdAbastecimentos}\nQuantidade de calibragens: {QtdCalibragens}\nLitros consumidos: {LitrosConsumidos}");
+            Console.WriteLine($"\nDesgaste do Pneu:\n{DesgastePneu.ToString()}");
             Console.WriteLine($"Alteracao climatica:\n{AlteracaoClimatica.ToString()}");
         }
     }

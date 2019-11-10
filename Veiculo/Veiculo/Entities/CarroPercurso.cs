@@ -87,13 +87,13 @@ namespace Veiculo {
                     if (Veiculo.Flex) {
                         if (Veiculo.QtdAlcool > 0) {
                             Veiculo.QtdAlcool = Math.Round((Veiculo.QtdAlcool - (0.1 / Veiculo.AutonomiaA)), 2);
-                            Relatorio.LitrosConsumidos = Math.Round((Relatorio.LitrosConsumidos + 0.1), 1);
+                            Relatorio.LitrosConsumidos = Math.Round((Relatorio.LitrosConsumidos + (0.1 / Veiculo.AutonomiaA)), 1);
                             Relatorio.KmPercorrida = Math.Round((Relatorio.KmPercorrida + 0.1), 1);
                             viagem = Math.Round((viagem - 0.1), 1);
                         }
                         else {
                             Veiculo.QtdGasolina = Math.Round((Veiculo.QtdGasolina - (0.1 / Veiculo.AutonomiaG)), 2);
-                            Relatorio.LitrosConsumidos = Math.Round((Relatorio.LitrosConsumidos + 0.1), 1);
+                            Relatorio.LitrosConsumidos = Math.Round((Relatorio.LitrosConsumidos + (0.1 / Veiculo.AutonomiaG)), 1);
                             Relatorio.KmPercorrida = Math.Round((Relatorio.KmPercorrida + 0.1), 1);
                             viagem = Math.Round((viagem - 0.1), 1);
                         }
@@ -102,14 +102,14 @@ namespace Veiculo {
                         //Se for Alcool
                         if (Veiculo.TipoCombustivel == "Alcool") {
                             Veiculo.QtdCombustivel = Math.Round((Veiculo.QtdCombustivel - (0.1 / Veiculo.AutonomiaA)), 2);
-                            Relatorio.LitrosConsumidos = Math.Round((Relatorio.LitrosConsumidos + 0.1), 1);
+                            Relatorio.LitrosConsumidos = Math.Round((Relatorio.LitrosConsumidos + (0.1 / Veiculo.AutonomiaA)), 1);
                             Relatorio.KmPercorrida = Math.Round((Relatorio.KmPercorrida + 0.1), 1);
                             viagem = Math.Round((viagem - 0.1), 1);
                         }
                         //Se for Gasolina
                         else {
                             Veiculo.QtdCombustivel = Math.Round((Veiculo.QtdCombustivel - (0.1 / Veiculo.AutonomiaG)), 2);
-                            Relatorio.LitrosConsumidos = Math.Round((Relatorio.LitrosConsumidos + 0.1), 1);
+                            Relatorio.LitrosConsumidos = Math.Round((Relatorio.LitrosConsumidos + (0.1 / Veiculo.AutonomiaG)), 1);
                             Relatorio.KmPercorrida = Math.Round((Relatorio.KmPercorrida + 0.1), 1);
                             viagem = Math.Round((viagem - 0.1), 1);
                         }
