@@ -88,8 +88,10 @@ namespace Veiculo {
                 do {
                     Console.Write("Digite quantos km o veiculo faz por litro de alcool: ");
                     uint.TryParse(Console.ReadLine(), out result);
-                    if (result != 0)
+                    if (result != 0) {
                         veiculo.AutonomiaA = result;
+                        veiculo.AutonomiaOriginalA = result;
+                    }
                     else if (result == 0)
                         Console.WriteLine("Autonomia invalida, digite novamente");
                 }
@@ -99,8 +101,10 @@ namespace Veiculo {
                 do {
                     Console.Write("Digite quantos km o veiculo faz por litro de gasolina: ");
                     uint.TryParse(Console.ReadLine(), out result2);
-                    if (result2 != 0)
+                    if (result2 != 0) {
                         veiculo.AutonomiaG = result2;
+                        veiculo.AutonomiaOriginalG = result2;
+                    }
                     else if (result2 == 0)
                         Console.WriteLine("Autonomia invalida, digite novamente");
                 }
@@ -113,8 +117,10 @@ namespace Veiculo {
                 do {
                     Console.Write("Digite quantos km o veiculo faz por litro: ");
                     uint.TryParse(Console.ReadLine(), out result);
-                    if (result != 0)
+                    if (result != 0) {
                         veiculo.AutonomiaA = result;
+                        veiculo.AutonomiaOriginalA = result;
+                    }
                     else if (result == 0)
                         Console.WriteLine("Autonomia invalida, digite novamente");
                 }
@@ -127,8 +133,10 @@ namespace Veiculo {
                 do {
                     Console.Write("Digite quantos km o veiculo faz por litro: ");
                     uint.TryParse(Console.ReadLine(), out result);
-                    if (result != 0)
+                    if (result != 0) {
                         veiculo.AutonomiaG = result;
+                        veiculo.AutonomiaOriginalG = result;
+                    }
                     else if (result == 0)
                         Console.WriteLine("Autonomia invalida, digite novamente");
                 }
@@ -237,6 +245,10 @@ namespace Veiculo {
                     cp.Percurso.MostrarPercurso();
                 }
             }
+        }
+        public void ExibirRelatorios() {
+            foreach(Relatorio r in Relatorios)
+                r.ExibirRelatorio();
         }
     }
 }
