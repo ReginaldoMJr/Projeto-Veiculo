@@ -22,11 +22,11 @@ namespace Veiculo {
                 num = Console.ReadLine();
 
                 switch (num) {
-                    case "1": //Faz o cadastro do veiculo
+                    case "1": //Faz o cadastro do veiculo ou de um Percurso
                         Console.Clear();
                         SubMenuCadastro.Cadastro(agenciaViagem);
                         break;
-                    case "2": //Função para cadastrar um percurso
+                    case "2": //Função para Exibir Veiculos, Percursos e viagens em espera
                         Console.Clear();
                         SubMenuExibicao.Exibicao(agenciaViagem);
                         break;
@@ -43,9 +43,11 @@ namespace Veiculo {
                             Console.ReadLine();
                         }
                         else {
+                            agenciaViagem.ExibirCarrosPercursos();
+                            Console.WriteLine("Digite a placa do veiculo");
                             string placa = Console.ReadLine();
                             CarroPercurso carroPercurso = agenciaViagem.CarroPercursos.Find(x => x.Veiculo.Placa == placa);
-                            carroPercurso.Dirigir(agenciaViagem);
+                            carroPercurso.Dirigir(agenciaViagem, carroPercurso);
                         }
                         break;
                     //Função para calibrar o pneu do veiculo 

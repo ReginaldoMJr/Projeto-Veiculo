@@ -5,11 +5,12 @@ namespace Veiculo {
         public Veiculo Veiculo { get; set; }
         public Percurso Percurso { get; set; }
 
-        public void Dirigir(AgenciaViagem agenciaViagem) {
-            Relatorio Relatorio = new Relatorio();
-            Relatorio.CarroPercurso.Veiculo = Veiculo;
-            Relatorio.CarroPercurso.Percurso = Percurso;
-            agenciaViagem.Relatorios.Add(Relatorio);
+        public void Dirigir(AgenciaViagem agenciaViagem, CarroPercurso carroPercurso) {
+            Relatorio Relatorio = agenciaViagem.Relatorios.Find(x => x.CarroPercurso.Percurso.Id == Percurso.Id);
+            if (Relatorio == null) {
+                Relatorio = new Relatorio { CarroPercurso = carroPercurso };
+                agenciaViagem.Relatorios.Add(Relatorio);
+            }
             double MenuDirigir() {
                 string num;
                 double viagem2;
@@ -42,15 +43,36 @@ namespace Veiculo {
                     Console.ReadLine();
                 }
                 else if(viagem == 0) {
-
+                    double MenuViagem() {
+                        Console.WriteLine("[1] Abastecer\n\n[2] Calibrar Pneu\n\n[3] Continuar viagem");
+                        string num = Console.ReadLine();
+                        switch (num) {
+                            case "1":
+                                if (Veiculo.Flex)
+                                    Veiculo.AbastecerFlex();
+                                else
+                                    Veiculo.Abastecer();
+                                return MenuViagem();
+                            case "2":
+                                Veiculo.CalibrarPneu();
+                                return MenuViagem();
+                            case "3":
+                                return MenuDirigir();
+                            default:
+                                Console.WriteLine("Opcao invalida, aperte enter para tentar novamente");
+                                Console.ReadLine();
+                                return MenuViagem();
+                        }
+                    }
                 }
-                else if (Relatorio.KmPercorrida % 100 == 0) {
+                else if (Relatorio.KmPercorrida % 100 == 0 && Relatorio.KmPercorrida > 0) {
                     int cli = new Random().Next(1, 3);
                     Relatorio.AlteracaoClimatica.AppendLine($"Alteracao Climatica: {Relatorio.KmPercorrida} KM -- Clima: {cli}");
                     if (cli.ToString() != Percurso.Clima) {
                         Percurso.Clima = cli.ToString();
                         CalculoClima(Veiculo, Percurso.Clima);
                     }
+                    
                 }
                 else if (Veiculo.QtdGasolina == 0 && Veiculo.QtdAlcool == 0 && Veiculo.QtdCombustivel == 0 && km != Percurso.Trajeto) {
                     Console.WriteLine($"Faltam {Percurso.Trajeto - km} KM");
