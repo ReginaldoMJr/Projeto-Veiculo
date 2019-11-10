@@ -10,6 +10,28 @@ namespace Veiculo {
             Relatorio.CarroPercurso.Veiculo = Veiculo;
             Relatorio.CarroPercurso.Percurso = Percurso;
             agenciaViagem.Relatorios.Add(Relatorio);
+            double MenuDirigir() {
+                string num;
+                double viagem2;
+                Console.WriteLine("[1] Dirigir até acabar o combustivel\n\n[2] Dirigir uma distancia especifica");
+                num = Console.ReadLine();
+                switch (num) {
+                    case "1":
+                        viagem2 = Percurso.Trajeto;
+                        return viagem2;
+                    case "2":
+                        Console.Write("Digite o valor que quer viajar: ");
+                        double.TryParse(Console.ReadLine(), out viagem2);
+                        if(viagem2 == 0 || viagem2 > Percurso.Trajeto) {
+                            Console.WriteLine("Valor invalido, tente novamente");
+                            return MenuDirigir();
+                        }
+                        return viagem2;
+                    default:
+                        Console.WriteLine("Opcao invalida, tente novamente");
+                        return MenuDirigir();
+                } }
+            double viagem = MenuDirigir();
             //Dirigir com todos os tipos de combustivel
             for (double km = 0; km <= Percurso.Trajeto; km = Math.Round((km + 0.1), 1)) {
                 if (Relatorio.KmPercorrida == Percurso.Trajeto) {
@@ -18,6 +40,9 @@ namespace Veiculo {
                     Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
                     Console.ResetColor();
                     Console.ReadLine();
+                }
+                else if(viagem == 0) {
+
                 }
                 else if (Relatorio.KmPercorrida % 100 == 0) {
                     int cli = new Random().Next(1, 3);
@@ -42,11 +67,13 @@ namespace Veiculo {
                             Veiculo.QtdAlcool = Math.Round((Veiculo.QtdAlcool - (0.1 / Veiculo.AutonomiaA)), 2);
                             Relatorio.LitrosConsumidos = Math.Round((Relatorio.LitrosConsumidos + 0.1), 1);
                             Relatorio.KmPercorrida = Math.Round((Relatorio.KmPercorrida + 0.1), 1);
+                            viagem = Math.Round((viagem - 0.1), 1);
                         }
                         else {
                             Veiculo.QtdGasolina = Math.Round((Veiculo.QtdGasolina - (0.1 / Veiculo.AutonomiaG)), 2);
                             Relatorio.LitrosConsumidos = Math.Round((Relatorio.LitrosConsumidos + 0.1), 1);
                             Relatorio.KmPercorrida = Math.Round((Relatorio.KmPercorrida + 0.1), 1);
+                            viagem = Math.Round((viagem - 0.1), 1);
                         }
                     }
                     else {
@@ -55,12 +82,14 @@ namespace Veiculo {
                             Veiculo.QtdCombustivel = Math.Round((Veiculo.QtdCombustivel - (0.1 / Veiculo.AutonomiaA)), 2);
                             Relatorio.LitrosConsumidos = Math.Round((Relatorio.LitrosConsumidos + 0.1), 1);
                             Relatorio.KmPercorrida = Math.Round((Relatorio.KmPercorrida + 0.1), 1);
+                            viagem = Math.Round((viagem - 0.1), 1);
                         }
                         //Se for Gasolina
                         else {
                             Veiculo.QtdCombustivel = Math.Round((Veiculo.QtdCombustivel - (0.1 / Veiculo.AutonomiaG)), 2);
                             Relatorio.LitrosConsumidos = Math.Round((Relatorio.LitrosConsumidos + 0.1), 1);
                             Relatorio.KmPercorrida = Math.Round((Relatorio.KmPercorrida + 0.1), 1);
+                            viagem = Math.Round((viagem - 0.1), 1);
                         }
                     }
                 }
