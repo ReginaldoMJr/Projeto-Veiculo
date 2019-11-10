@@ -11,7 +11,6 @@ namespace Veiculo {
 
         public void CadastrarVeiculo() {
             Veiculo veiculo = new Veiculo();
-
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("----------- Cadastro Veiculo -------------\n");
             Console.ResetColor();
@@ -189,6 +188,37 @@ namespace Veiculo {
             carroPercurso.Veiculo = veiculo;
             carroPercurso.Percurso = percurso;
             CarroPercursos.Add(carroPercurso);
+        }
+        public void ExibirVeiculos() {
+            if(Veiculos.Count == 0) {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Sem veiculos cadastrados");
+                Console.ResetColor();
+            }
+            foreach (Veiculo v in Veiculos) {
+                Console.WriteLine($"Marca: {v.Marca}\tModelo: {v.Modelo}\tAno: {v.Ano}\nPlaca: {v.Placa}\tCapacidade do tanque{v.CapacidadeTanque}\tPneu:{v.Pneu}");
+                if (v.Flex)
+                    Console.Write($"Tipo Combustivel: Alcool e Gasolina\tQuantidade de combustivel: {v.QtdAlcool + v.QtdGasolina}/{v.CapacidadeTanque}" +
+                        $"\nKm por litro de Alcool: {v.AutonomiaOriginalA}\tKm por litro de Gasolina: {v.AutonomiaOriginalG} (Valores podem variar de acordo com o clima e estado do pneu)");
+                else if (v.TipoCombustivel == "Alcool")
+                    Console.Write($"Tipo de Combustivel: {v.TipoCombustivel}\tQuantidade de Combustivel: {v.QtdCombustivel}/{v.CapacidadeTanque}" +
+                        $"\nKm por litro de combustivel: {v.AutonomiaOriginalA} (Valores podem variar de acordo com o clima e estado do pneu)");
+                else
+                    Console.Write($"Tipo de Combustivel: {v.TipoCombustivel}\tQuantidade de Combustivel: {v.QtdCombustivel}/{v.CapacidadeTanque}" +
+                        $"\nKm por litro de combustivel: {v.AutonomiaOriginalG} (Valores podem variar de acordo com o clima e estado do pneu)");
+            }
+        }
+        public void ExibirPercursos() {
+            if(Percursos.Count == 0) {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Sem percursos cadastrados");
+                Console.ResetColor();
+            }
+            else {
+                foreach(Percurso p in Percursos)
+                    Console.WriteLine($"Id: {p.Id}\tTrajeto: {p.Trajeto} KM\tClima: {p.Clima}");
+            }
+
         }
     }
 }
