@@ -190,35 +190,49 @@ namespace Veiculo {
             CarroPercursos.Add(carroPercurso);
         }
         public void ExibirVeiculos() {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("=============== Veiculos ==================\n");
+            Console.ResetColor();
             if(Veiculos.Count == 0) {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Sem veiculos cadastrados");
                 Console.ResetColor();
             }
             foreach (Veiculo v in Veiculos) {
-                Console.WriteLine($"Marca: {v.Marca}\tModelo: {v.Modelo}\tAno: {v.Ano}\nPlaca: {v.Placa}\tCapacidade do tanque{v.CapacidadeTanque}\tPneu:{v.Pneu}");
-                if (v.Flex)
-                    Console.Write($"Tipo Combustivel: Alcool e Gasolina\tQuantidade de combustivel: {v.QtdAlcool + v.QtdGasolina}/{v.CapacidadeTanque}" +
-                        $"\nKm por litro de Alcool: {v.AutonomiaOriginalA}\tKm por litro de Gasolina: {v.AutonomiaOriginalG} (Valores podem variar de acordo com o clima e estado do pneu)");
-                else if (v.TipoCombustivel == "Alcool")
-                    Console.Write($"Tipo de Combustivel: {v.TipoCombustivel}\tQuantidade de Combustivel: {v.QtdCombustivel}/{v.CapacidadeTanque}" +
-                        $"\nKm por litro de combustivel: {v.AutonomiaOriginalA} (Valores podem variar de acordo com o clima e estado do pneu)");
-                else
-                    Console.Write($"Tipo de Combustivel: {v.TipoCombustivel}\tQuantidade de Combustivel: {v.QtdCombustivel}/{v.CapacidadeTanque}" +
-                        $"\nKm por litro de combustivel: {v.AutonomiaOriginalG} (Valores podem variar de acordo com o clima e estado do pneu)");
+                v.MostrarVeiculo();
             }
         }
         public void ExibirPercursos() {
-            if(Percursos.Count == 0) {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("=============== Percursos ==================\n");
+            Console.ResetColor();
+            if (Percursos.Count == 0) {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Sem percursos cadastrados");
                 Console.ResetColor();
             }
             else {
-                foreach(Percurso p in Percursos)
-                    Console.WriteLine($"Id: {p.Id}\tTrajeto: {p.Trajeto} KM\tClima: {p.Clima}");
+                foreach (Percurso p in Percursos)
+                    p.MostrarPercurso();
             }
-
+        }
+        public void ExibirCarrosPercursos() {
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("============= Viagens disponiveis ============\n");
+            Console.ResetColor();
+            if(CarroPercursos.Count == 0) {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Sem viagens disponiveis");
+                Console.ResetColor();
+            }
+            else {
+                foreach(CarroPercurso cp in CarroPercursos) {
+                    Console.Write("Veiculo -> ");
+                    cp.Veiculo.MostrarVeiculo();
+                    Console.Write("\nPercurso -> ");
+                    cp.Percurso.MostrarPercurso();
+                }
+            }
         }
     }
 }

@@ -5,16 +5,17 @@ namespace Veiculo {
         public Veiculo Veiculo { get; set; }
         public Percurso Percurso { get; set; }
 
-        public void Dirigir(AgenciaViagem agenciaViagem , CarroPercurso carroPercurso) {            
+        public void Dirigir(AgenciaViagem agenciaViagem) {            
             Relatorio Relatorio = new Relatorio();
-            Relatorio.CarroPercurso = carroPercurso;
+            Relatorio.CarroPercurso.Veiculo = Veiculo;
+            Relatorio.CarroPercurso.Percurso = Percurso;
             agenciaViagem.Relatorios.Add(Relatorio);
             //Dirigir se for Flex
             if (Veiculo.Flex) {
                 for (double km = 0; km <= Percurso.Trajeto; km = Math.Round((km + 0.1), 1)) {
                     if (Relatorio.KmPercorrida % 100 == 0) {
                         int cli = new Random().Next(1, 3);
-                        Relatorio.AlteracaoClimatica.Append
+                        Relatorio.AlteracaoClimatica.Append("");
                         if (cli.ToString() != Percurso.Clima) {
                             Percurso.Clima = cli.ToString();
                             CalculoClima(Veiculo, Percurso.Clima);
@@ -29,7 +30,7 @@ namespace Veiculo {
                         km = Math.Round((km - 0.1), 2);
                     }
                     else if (km == Percurso.Trajeto) {
-                        agenciaViagem.CarroPercursos.Remove(carroPercurso);
+                        agenciaViagem.CarroPercursos.Remove(Relatorio.CarroPercurso);
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
                         Console.ResetColor();

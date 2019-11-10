@@ -139,15 +139,18 @@ namespace Veiculo {
         }
         //Mostrar os dados do veiculo
         public void MostrarVeiculo() {
-            Console.WriteLine($"Marca: {Marca}\nModelo: {Modelo}\nPlaca: {Placa}\nAno: {Ano}"
-                + $"\nCapacidade do tanque: {CapacidadeTanque} Litros");
-            if(Flex == true) 
-                Console.WriteLine($"Tipo de combustivel: Alcool e Gasolina\nAutonomia Gasolina: {AutonomiaG}\nAutonomia Alcool {AutonomiaA}\nQuantidade de Gasolina: {QtdGasolina}\nQuantidade de Alcool: {QtdAlcool}");
-            else if(TipoCombustivel == "Gasolina")
-                Console.WriteLine($"Tipo de combustivel: {TipoCombustivel}\nAutonomia: {AutonomiaG}\nQuantidade de Combustivel: {QtdCombustivel}");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Marca: {Marca}\tModelo: {Modelo}\tAno: {Ano}\nPlaca: {Placa}\tCapacidade do tanque{CapacidadeTanque}\tPneu:{Pneu}");
+            if (Flex)
+                Console.Write($"Tipo Combustivel: Alcool e Gasolina\tQuantidade de combustivel: {QtdAlcool + QtdGasolina}/{CapacidadeTanque}" +
+                    $"\nKm por litro de Alcool: {AutonomiaOriginalA}\tKm por litro de Gasolina: {AutonomiaOriginalG} (Valores podem variar de acordo com o clima e estado do pneu)");
+            else if (TipoCombustivel == "Alcool")
+                Console.Write($"Tipo de Combustivel: {TipoCombustivel}\tQuantidade de Combustivel: {QtdCombustivel}/{CapacidadeTanque}" +
+                    $"\nKm por litro de combustivel: {AutonomiaOriginalA} (Valores podem variar de acordo com o clima e estado do pneu)");
             else
-                Console.WriteLine($"Tipo de combustivel: {TipoCombustivel}\nAutonomia: {AutonomiaA}\nQuantidade de Combustivel: {QtdCombustivel}");
-
+                Console.Write($"Tipo de Combustivel: {TipoCombustivel}\tQuantidade de Combustivel: {QtdCombustivel}/{CapacidadeTanque}" +
+                    $"\nKm por litro de combustivel: {AutonomiaOriginalG} (Valores podem variar de acordo com o clima e estado do pneu)");
+            Console.ResetColor();
         }
     }
 }

@@ -10,12 +10,19 @@ namespace Veiculo.Util {
             switch (num) {
                 case "1":
                     agenciaViagem.ExibirVeiculos();
+                    Console.ReadLine();
                     break;
                 case "2":
                     agenciaViagem.ExibirPercursos();
+                    Console.ReadLine();
                     break;
                 case "3":
-                    //TODO: Metodo para mostrar as viagens em espera
+                    agenciaViagem.ExibirCarrosPercursos();
+                    Console.ReadLine();
+                    break;
+                default:
+                    Console.WriteLine("Opcao invalida, tente novamente");
+                    Exibicao(agenciaViagem);
                     break;
             }
         }

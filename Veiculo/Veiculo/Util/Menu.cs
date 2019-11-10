@@ -1,40 +1,34 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using Veiculo.Util;
 
 namespace Veiculo {
     class Menu {
         public static void menu(AgenciaViagem agenciaViagem) {
             string num;
             do {
-                do {
-                    Console.Clear();
-                    Console.ForegroundColor = ConsoleColor.Cyan;
-                    Console.WriteLine("------------- Menu -------------");
-                    Console.ResetColor();
-                    Console.WriteLine("[1] Cadastrar carro");
-                    Console.WriteLine("[2] Cadastrar viagem");
-                    Console.WriteLine("[3] Atribuir um carro a uma viagem");
-                    Console.WriteLine("[4] Dirigir");
-                    Console.WriteLine("[5] Abastecer");
-                    Console.WriteLine("[6] Calibrar Pneu");
-                    Console.WriteLine("[7] Exibir informações do veiculo");
-                    Console.WriteLine("[0] Sair do programa");
-                    num = Console.ReadLine();
-                    if(!Regex.IsMatch(num, "^[0-7]{1}$")) {
-                        Console.WriteLine("Valor invalido, digite novamente");
-                        num = "8";
-                    }
-                }
-                while (num == "8");
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("------------- Menu -------------");
+                Console.ResetColor();
+                Console.WriteLine("[1] Cadastros");
+                Console.WriteLine("[2] Exibir");
+                Console.WriteLine("[3] Atribuir um carro a uma viagem");
+                Console.WriteLine("[4] Dirigir");
+                Console.WriteLine("[5] Abastecer");
+                Console.WriteLine("[6] Calibrar Pneu");
+                Console.WriteLine("[7] Exibir informações do veiculo");
+                Console.WriteLine("[0] Sair do programa");
+                num = Console.ReadLine();
 
                 switch (num) {
                     case "1": //Faz o cadastro do veiculo
                         Console.Clear();
-                        agenciaViagem.CadastrarVeiculo();
+                        SubMenuCadastro.Cadastro(agenciaViagem);
                         break;
                     case "2": //Função para cadastrar um percurso
                         Console.Clear();
-                        agenciaViagem.CadastrarPercurso();
+                        SubMenuExibicao.Exibicao(agenciaViagem);
                         break;
                     case "3":
                         Console.Clear();
@@ -51,9 +45,8 @@ namespace Veiculo {
                         else {
                             string placa = Console.ReadLine();
                             CarroPercurso carroPercurso = agenciaViagem.CarroPercursos.Find(x => x.Veiculo.Placa == placa);
-                            carroPercurso.Dirigir(agenciaViagem, carroPercurso);
+                            carroPercurso.Dirigir(agenciaViagem);
                         }
-                        
                         break;
                     //Função para calibrar o pneu do veiculo 
                     case "5":
@@ -91,6 +84,11 @@ namespace Veiculo {
                         Console.Write("Sair do programa selecionado, se tem certeza disso aperte enter, senão aperte esc para voltar ao menu");
                         if (Console.ReadKey().Key == ConsoleKey.Escape)
                             num = "6";
+                        break;
+                    default:
+                        Console.WriteLine("Opcao invalida, aperte enter para tentar novamente");
+                        Console.ReadLine();
+                        menu(agenciaViagem);
                         break;
                 }
             }
