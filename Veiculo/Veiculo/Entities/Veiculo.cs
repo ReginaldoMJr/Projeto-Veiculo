@@ -77,17 +77,7 @@ namespace Veiculo {
                 while (abastecer == 3000);
         }
         //Metodo para calibrar pneu do veiculo
-        public void CalibrarPneu() {
-            //Voltar para os valores originais
-            if(Pneu == "2") {
-                AutonomiaA /= 0.9275;
-                AutonomiaG /= 0.9275;
-            }
-            else if(Pneu == "1") {
-                AutonomiaA /= 0.9085;
-                AutonomiaG /= 0.9085;
-            }
-            
+        public string CalibrarPneu() {
             //Mudar a autonomia de acordo com o pedido
             do {
                 Console.WriteLine("[3] Autonomia original\n[2] Autonomia com decrescimo de 7,25%\n[1] Autonomia com decrescimo de 9,15%\nQual o nivel do pneu?");
@@ -96,18 +86,7 @@ namespace Veiculo {
                     Console.WriteLine("\nValor invalido, Digite um numero de 1 a 3\n");
             }
             while (!Regex.IsMatch(Pneu, "^[1-3]{1}$"));
-
-            if (Pneu == "2") {
-                AutonomiaA -= AutonomiaA * 0.0725;
-                AutonomiaG -= AutonomiaG * 0.0725;
-            }
-            if (Pneu == "1") {
-                AutonomiaA -= AutonomiaA * 0.0915;
-                AutonomiaG -= AutonomiaG * 0.0915;
-            }
-        }
-        public void DesgastePneu() {
-
+            return Pneu;
         }
         //Metodo para encher o tanque com qualquer tipo de combustivel
         public void EncherTanque() {
@@ -140,16 +119,16 @@ namespace Veiculo {
         //Mostrar os dados do veiculo
         public void MostrarVeiculo() {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Marca: {Marca}\tModelo: {Modelo}\tAno: {Ano}\nPlaca: {Placa}\tCapacidade do tanque{CapacidadeTanque}\tPneu:{Pneu}");
+            Console.WriteLine($"Marca: {Marca}\nModelo: {Modelo}\nAno: {Ano}\nPlaca: {Placa}\nCapacidade do tanque{CapacidadeTanque}\nPneu:{Pneu}");
             if (Flex)
-                Console.Write($"Tipo Combustivel: Alcool e Gasolina\tQuantidade de combustivel: {QtdAlcool + QtdGasolina}/{CapacidadeTanque}" +
-                    $"\nKm por litro de Alcool: {AutonomiaOriginalA}\tKm por litro de Gasolina: {AutonomiaOriginalG} (Valores podem variar de acordo com o clima e estado do pneu)");
+                Console.WriteLine($"Tipo Combustivel: Alcool e Gasolina\nQuantidade de combustivel: {QtdAlcool + QtdGasolina}/{CapacidadeTanque}" +
+                    $"\nKm por litro de Alcool: {AutonomiaOriginalA}\nKm por litro de Gasolina: {AutonomiaOriginalG}\n(Valores podem variar de acordo com o clima e estado do pneu)");
             else if (TipoCombustivel == "Alcool")
-                Console.Write($"Tipo de Combustivel: {TipoCombustivel}\tQuantidade de Combustivel: {QtdCombustivel}/{CapacidadeTanque}" +
-                    $"\nKm por litro de combustivel: {AutonomiaOriginalA} (Valores podem variar de acordo com o clima e estado do pneu)");
+                Console.WriteLine($"Tipo de Combustivel: {TipoCombustivel}\nQuantidade de Combustivel: {QtdCombustivel}/{CapacidadeTanque}" +
+                    $"\nKm por litro de combustivel: {AutonomiaOriginalA}\n(Valores podem variar de acordo com o clima e estado do pneu)");
             else
-                Console.Write($"Tipo de Combustivel: {TipoCombustivel}\tQuantidade de Combustivel: {QtdCombustivel}/{CapacidadeTanque}" +
-                    $"\nKm por litro de combustivel: {AutonomiaOriginalG} (Valores podem variar de acordo com o clima e estado do pneu)");
+                Console.WriteLine($"Tipo de Combustivel: {TipoCombustivel}\nQuantidade de Combustivel: {QtdCombustivel}/{CapacidadeTanque}" +
+                    $"\nKm por litro de combustivel: {AutonomiaOriginalG}\n(Valores podem variar de acordo com o clima e estado do pneu)");
             Console.ResetColor();
         }
     }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 using Veiculo.Util;
 
 namespace Veiculo {
@@ -15,9 +14,6 @@ namespace Veiculo {
                 Console.WriteLine("[2] Exibir");
                 Console.WriteLine("[3] Atribuir um carro a uma viagem");
                 Console.WriteLine("[4] Dirigir");
-                Console.WriteLine("[5] Abastecer");
-                Console.WriteLine("[6] Calibrar Pneu");
-                Console.WriteLine("[7] Exibir informações do veiculo");
                 Console.WriteLine("[0] Sair do programa");
                 num = Console.ReadLine();
 
@@ -48,37 +44,6 @@ namespace Veiculo {
                             string placa = Console.ReadLine();
                             CarroPercurso carroPercurso = agenciaViagem.CarroPercursos.Find(x => x.Veiculo.Placa == placa);
                             carroPercurso.Dirigir(agenciaViagem, carroPercurso);
-                        }
-                        break;
-                    //Função para calibrar o pneu do veiculo 
-                    case "5":
-                        if (agenciaViagem.Veiculos.Count == 0) {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Não tem nenhum carro, aperte enter para voltar ao menu");
-                            Console.ResetColor();
-                            Console.ReadLine();
-                        }
-                        else {
-                            /*Console.WriteLine("Digite o id do carro:");
-                            teste = Console.ReadLine();
-                            veiculo = agenciaViagem.Veiculos.Find(x => x.Placa == teste);
-                            veiculo.CalibrarPneu();*/
-                        }
-                        break;
-                    //Função para mostrar todas as informações do veiculo
-                    case "6":
-                        if (agenciaViagem.Veiculos.Count == 0) {
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            Console.WriteLine("Não tem nenhum carro, aperte enter para voltar ao menu");
-                            Console.ResetColor();
-                            Console.ReadLine();
-                        }
-                        else {
-                            /*Console.WriteLine("Digite o id do carro:");
-                            teste = Console.ReadLine();
-                            veiculo = agenciaViagem.Veiculos.Find(x => x.Placa == teste);
-                            veiculo.MostrarVeiculo();
-                            Console.ReadLine();*/
                         }
                         break;
                     //Sair do programa

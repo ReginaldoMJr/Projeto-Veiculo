@@ -8,7 +8,7 @@ namespace Veiculo {
 
         public void MostrarPercurso() {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Id: {Id}\tTrajeto: {Trajeto} KM\tClima: {Clima}");
+            Console.WriteLine($"Id: {Id}\nTrajeto: {Trajeto} KM\nClima: {Clima}");
             Console.ResetColor();
         }
     }
