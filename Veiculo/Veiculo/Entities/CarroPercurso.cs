@@ -69,7 +69,10 @@ namespace Veiculo {
                         }
                     }
                 }
-                else if (Veiculo.QtdGasolina == 0 && Veiculo.QtdAlcool == 0 && Veiculo.QtdCombustivel == 0 && km != Percurso.Trajeto) {
+                else if (Veiculo.QtdGasolina <= 0 && Veiculo.QtdAlcool <= 0 && Veiculo.QtdCombustivel <= 0 && km != Percurso.Trajeto) {
+                    Veiculo.QtdGasolina = 0;
+                    Veiculo.QtdAlcool = 0;
+                    Veiculo.QtdCombustivel = 0;
                     Console.WriteLine($"Faltam {Percurso.Trajeto - Relatorio.KmPercorrida} KM");
                     Veiculo.EncherTanque();
                     Relatorio.QtdAbastecimentos++;
@@ -85,13 +88,13 @@ namespace Veiculo {
                     //Se for Flex
                     if (Veiculo.Flex) {
                         if (Veiculo.QtdAlcool > 0) {
-                            Veiculo.QtdAlcool = Math.Round((Veiculo.QtdAlcool - (0.1 / Veiculo.AutonomiaA)), 2);
+                            Veiculo.QtdAlcool = Math.Round((Veiculo.QtdAlcool - (0.1 / Veiculo.AutonomiaA)), 3);
                             Relatorio.LitrosConsumidos = Math.Round((Relatorio.LitrosConsumidos + (0.1 / Veiculo.AutonomiaA)), 2);
                             Relatorio.KmPercorrida = Math.Round((Relatorio.KmPercorrida + 0.1), 1);
                             viagem = Math.Round((viagem - 0.1), 1);
                         }
                         else {
-                            Veiculo.QtdGasolina = Math.Round((Veiculo.QtdGasolina - (0.1 / Veiculo.AutonomiaG)), 2);
+                            Veiculo.QtdGasolina = Math.Round((Veiculo.QtdGasolina - (0.1 / Veiculo.AutonomiaG)), 3);
                             Relatorio.LitrosConsumidos = Math.Round((Relatorio.LitrosConsumidos + (0.1 / Veiculo.AutonomiaG)), 2);
                             Relatorio.KmPercorrida = Math.Round((Relatorio.KmPercorrida + 0.1), 1);
                             viagem = Math.Round((viagem - 0.1), 1);
@@ -100,14 +103,14 @@ namespace Veiculo {
                     else {
                         //Se for Alcool
                         if (Veiculo.TipoCombustivel == "Alcool") {
-                            Veiculo.QtdCombustivel = Math.Round((Veiculo.QtdCombustivel - (0.1 / Veiculo.AutonomiaA)), 2);
+                            Veiculo.QtdCombustivel = Math.Round((Veiculo.QtdCombustivel - (0.1 / Veiculo.AutonomiaA)), 3);
                             Relatorio.LitrosConsumidos = Math.Round((Relatorio.LitrosConsumidos + (0.1 / Veiculo.AutonomiaA)), 2);
                             Relatorio.KmPercorrida = Math.Round((Relatorio.KmPercorrida + 0.1), 1);
                             viagem = Math.Round((viagem - 0.1), 1);
                         }
                         //Se for Gasolina
                         else {
-                            Veiculo.QtdCombustivel = Math.Round((Veiculo.QtdCombustivel - (0.1 / Veiculo.AutonomiaG)), 2);
+                            Veiculo.QtdCombustivel = Math.Round((Veiculo.QtdCombustivel - (0.1 / Veiculo.AutonomiaG)), 3);
                             Relatorio.LitrosConsumidos = Math.Round((Relatorio.LitrosConsumidos + (0.1 / Veiculo.AutonomiaG)), 2);
                             Relatorio.KmPercorrida = Math.Round((Relatorio.KmPercorrida + 0.1), 1);
                             viagem = Math.Round((viagem - 0.1), 1);
@@ -121,6 +124,8 @@ namespace Veiculo {
                     int pneu = new Random().Next(0, 2);
                     Veiculo.Pneu = (int.Parse(Veiculo.Pneu) - pneu).ToString();
                     if (Veiculo.Pneu == "0") {
+                        Console.WriteLine("Pneu Furou, calibrar");
+                        Relatorio.DesgastePneu.AppendLine($"Desgaste de Pneu: {km} KM -- Pneu: {Veiculo.Pneu}");
                         Veiculo.Pneu = Veiculo.CalibrarPneu();
                         Relatorio.QtdCalibragens++;
                     }
