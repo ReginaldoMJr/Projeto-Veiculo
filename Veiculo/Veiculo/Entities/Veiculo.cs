@@ -119,7 +119,7 @@ namespace Veiculo {
         //Mostrar os dados do veiculo
         public void MostrarVeiculo() {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Marca: {Marca}\nModelo: {Modelo}\nAno: {Ano}\nPlaca: {Placa}\nCapacidade do tanque{CapacidadeTanque}\nPneu:{Pneu}");
+            Console.WriteLine($"Marca: {Marca}\nModelo: {Modelo}\nAno: {Ano}\nPlaca: {Placa}\nCapacidade do tanque: {CapacidadeTanque}\nPneu: {Pneu}");
             if (Flex)
                 Console.WriteLine($"Tipo Combustivel: Alcool e Gasolina\nQuantidade de combustivel: {QtdAlcool + QtdGasolina}/{CapacidadeTanque}" +
                     $"\nKm por litro de Alcool: {AutonomiaOriginalA}\nKm por litro de Gasolina: {AutonomiaOriginalG}\n(Valores podem variar de acordo com o clima e estado do pneu)");

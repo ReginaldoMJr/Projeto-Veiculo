@@ -41,7 +41,7 @@ namespace Veiculo {
             do {
                 Console.Write("Digite a placa do veiculo (Modelo: BRA-6679): ");
                 veiculo.Placa = Console.ReadLine();
-                if (!Regex.IsMatch(veiculo.Placa, "^[A-Z]{3}-[0-9]{4}$")) { //validação da placa
+                if (!Regex.IsMatch(veiculo.Placa, "^[A-Z]{3}-[0-9]{4}$") || Veiculos.Exists(x => x.Placa == veiculo.Placa) || CarroPercursos.Exists(x => x.Veiculo.Placa == veiculo.Placa)) { //validação da placa
                     Console.WriteLine("\nPlaca invalida, digite novamente\n");
                     veiculo.Placa = null;
                 }
@@ -150,15 +150,6 @@ namespace Veiculo {
                     Console.WriteLine("\nValor invalido, Digite um numero de 1 a 3\n");
             }
             while (!Regex.IsMatch(veiculo.Pneu, "^[1-3]{1}$"));
-
-            if (veiculo.Pneu == "2") {
-                veiculo.AutonomiaA -= veiculo.AutonomiaA * 0.0725;
-                veiculo.AutonomiaG -= veiculo.AutonomiaG * 0.0725;
-            }
-            else if (veiculo.Pneu == "1") {
-                veiculo.AutonomiaA -= veiculo.AutonomiaA * 0.0915;
-                veiculo.AutonomiaG -= veiculo.AutonomiaG * 0.0915;
-            }
             Veiculos.Add(veiculo);
         }
         public void CadastrarPercurso() {
@@ -189,14 +180,23 @@ namespace Veiculo {
         }
         public void CadastrarCarroPercurso() {
             CarroPercurso carroPercurso = new CarroPercurso();
-            ExibirVeiculos();
-            Console.WriteLine("Digite a placa de um veiculo");
-            string verifica = Console.ReadLine();
-            Veiculo veiculo = Veiculos.Find(x => x.Placa == verifica);
-            ExibirPercursos();
-            Console.WriteLine("Digite o id do percurso");
-            verifica = Console.ReadLine();
-            Percurso percurso = Percursos.Find(x => x.Id.ToString() == verifica);
+            Veiculo veiculo;
+            string verifica;
+            do {
+                ExibirVeiculos();
+                Console.Write("Digite a placa de um veiculo: ");
+                verifica = Console.ReadLine();
+                veiculo = Veiculos.Find(x => x.Placa == verifica);
+            }
+            while (veiculo == null);
+            Percurso percurso;
+            do {
+                ExibirPercursos();
+                Console.Write("Digite o id do percurso: ");
+                verifica = Console.ReadLine();
+                percurso = Percursos.Find(x => x.Id.ToString() == verifica);
+            }
+            while (percurso == null);
             carroPercurso.Veiculo = veiculo;
             carroPercurso.Percurso = percurso;
             CarroPercursos.Add(carroPercurso);
@@ -247,8 +247,18 @@ namespace Veiculo {
             }
         }
         public void ExibirRelatorios() {
-            foreach(Relatorio r in Relatorios)
-                r.ExibirRelatorio();
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("============= Relatorios ============\n");
+            Console.ResetColor();
+            if (Relatorios.Count == 0) {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Nenhum relatorio encontrado");
+                Console.ResetColor();
+            }
+            else {
+                foreach (Relatorio r in Relatorios)
+                    r.ExibirRelatorio();
+            }
         }
     }
 }
