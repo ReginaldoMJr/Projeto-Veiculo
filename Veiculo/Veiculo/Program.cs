@@ -1,7 +1,15 @@
-﻿namespace Veiculo {
+﻿using Veiculo.Banco;
+
+namespace Veiculo {
     class Program {
         static void Main(string[] args) {
-            Menu.menu(new AgenciaViagem());
+            BancoDeDados banco = new BancoDeDados();
+            AgenciaViagem agencia = banco.BuscarDados();
+            if (agencia == null) {
+                Menu.menu(new AgenciaViagem());
+            }
+            else
+                Menu.menu(agencia);
         }
     }
 }

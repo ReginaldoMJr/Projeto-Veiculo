@@ -1,10 +1,12 @@
 ﻿using System;
 using Veiculo.Util;
+using Veiculo.Banco;
 
 namespace Veiculo {
     class Menu {
         public static void menu(AgenciaViagem agenciaViagem) {
             string num;
+            BancoDeDados banco = new BancoDeDados();
             do {
                 Console.Clear();
                 Console.ForegroundColor = ConsoleColor.Cyan;
@@ -21,6 +23,7 @@ namespace Veiculo {
                     case "1": //Faz o cadastro do veiculo ou de um Percurso
                         Console.Clear();
                         SubMenuCadastro.Cadastro(agenciaViagem);
+                        banco.Salvar(agenciaViagem);
                         break;
                     case "2": //Função para Exibir Veiculos, Percursos e viagens em espera
                         Console.Clear();
@@ -29,6 +32,7 @@ namespace Veiculo {
                     case "3":
                         Console.Clear();
                         agenciaViagem.CadastrarCarroPercurso();
+                        banco.Salvar(agenciaViagem);
                         break;
                     //Função para abastecer o veiculo
                     case "4":
@@ -44,6 +48,7 @@ namespace Veiculo {
                             string placa = Console.ReadLine();
                             CarroPercurso carroPercurso = agenciaViagem.CarroPercursos.Find(x => x.Veiculo.Placa == placa);
                             carroPercurso.Dirigir(agenciaViagem, carroPercurso);
+                            banco.Salvar(agenciaViagem);
                         }
                         break;
                     //Sair do programa
