@@ -199,6 +199,8 @@ namespace Veiculo {
             while (percurso == null);
             carroPercurso.Veiculo = veiculo;
             carroPercurso.Percurso = percurso;
+            Veiculos.Remove(veiculo);
+            Percursos.Remove(percurso);
             CarroPercursos.Add(carroPercurso);
         }
         public void ExibirVeiculos() {

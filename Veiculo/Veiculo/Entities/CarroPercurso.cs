@@ -38,7 +38,7 @@ namespace Veiculo {
             //Dirigir com todos os tipos de combustivel
             for (double km = 0; km <= Percurso.Trajeto; km = Math.Round((km + 0.1), 1)) {
                 if (Relatorio.KmPercorrida == Percurso.Trajeto) {
-                    agenciaViagem.CarroPercursos.Remove(agenciaViagem.CarroPercursos.Find(x => x.Percurso.Id == Percurso.Id));
+                    agenciaViagem.CarroPercursos.Remove(agenciaViagem.CarroPercursos.Find(x => x.Percurso == Percurso));
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("Viagem finalizada, aperte enter para voltar ao menu");
                     Console.ResetColor();
