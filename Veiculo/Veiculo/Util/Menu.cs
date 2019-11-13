@@ -16,6 +16,7 @@ namespace Veiculo {
                 Console.WriteLine("[2] Exibir");
                 Console.WriteLine("[3] Atribuir um carro a uma viagem");
                 Console.WriteLine("[4] Dirigir");
+                Console.WriteLine("[5] Abastecer um carro");
                 Console.WriteLine("[0] Sair do programa");
                 num = Console.ReadLine();
 
@@ -49,6 +50,37 @@ namespace Veiculo {
                             CarroPercurso carroPercurso = agenciaViagem.CarroPercursos.Find(x => x.Veiculo.Placa == placa);
                             carroPercurso.Dirigir(agenciaViagem, carroPercurso);
                             banco.Salvar(agenciaViagem);
+                        }
+                        break;
+                    case "5":
+                        if (agenciaViagem.CarroPercursos.Count == 0 && agenciaViagem.Veiculos.Count == 0) {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Não tem nenhum carro, aperte enter para voltar ao menu");
+                            Console.ResetColor();
+                            Console.ReadLine();
+                        }
+                        else {
+                            Console.WriteLine("========== Carros atribuidos ===========\n");
+                            agenciaViagem.CarroPercursos.ForEach(x => x.Veiculo.MostrarVeiculo());
+                            Console.WriteLine("\n======== carros não atribuidos =========");
+                            agenciaViagem.ExibirVeiculos();
+                            Veiculo veiculo;
+                            do {
+                                Console.WriteLine("Digite a Placa do veiculo que deseja abastecer");
+                                string placa = Console.ReadLine();
+                                veiculo = agenciaViagem.Veiculos.Find(x => x.Placa == placa);
+                                if(veiculo == null) {
+                                    veiculo = agenciaViagem.CarroPercursos.Find(x => x.Veiculo.Placa == placa).Veiculo;
+                                }
+                                if(veiculo == null) {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("Veiculo não encontrado, aperte enter para tentar novamente");
+                                    Console.ResetColor();
+                                    Console.ReadLine();
+                                }
+                            }
+                            while (veiculo == null);
+                            veiculo.EncherTanque();
                         }
                         break;
                     //Sair do programa
