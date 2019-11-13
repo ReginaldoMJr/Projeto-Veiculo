@@ -207,14 +207,12 @@ namespace Veiculo {
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("=============== Veiculos ==================\n");
             Console.ResetColor();
-            if(Veiculos.Count == 0) {
+            if (Veiculos.Count == 0) {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Sem veiculos cadastrados");
                 Console.ResetColor();
             }
-            foreach (Veiculo v in Veiculos) {
-                v.MostrarVeiculo();
-            }
+            else Veiculos.ForEach(x => x.MostrarVeiculo());
         }
         public void ExibirPercursos() {
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -225,10 +223,7 @@ namespace Veiculo {
                 Console.WriteLine("Sem percursos cadastrados");
                 Console.ResetColor();
             }
-            else {
-                foreach (Percurso p in Percursos)
-                    p.MostrarPercurso();
-            }
+            else Percursos.ForEach(x => x.MostrarPercurso());
         }
         public void ExibirCarrosPercursos() {
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -241,9 +236,9 @@ namespace Veiculo {
             }
             else {
                 foreach(CarroPercurso cp in CarroPercursos) {
-                    Console.Write("Veiculo -> ");
+                    Console.WriteLine("Veiculo -> ");
                     cp.Veiculo.MostrarVeiculo();
-                    Console.Write("\nPercurso -> ");
+                    Console.WriteLine("\nPercurso -> ");
                     cp.Percurso.MostrarPercurso();
                 }
             }
@@ -257,10 +252,7 @@ namespace Veiculo {
                 Console.WriteLine("Nenhum relatorio encontrado");
                 Console.ResetColor();
             }
-            else {
-                foreach (Relatorio r in Relatorios)
-                    r.ExibirRelatorio();
-            }
+            else Relatorios.ForEach(x => x.ExibirRelatorio());
         }
     }
 }
