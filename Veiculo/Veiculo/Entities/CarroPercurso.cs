@@ -86,7 +86,7 @@ namespace Veiculo {
                     Veiculo.QtdCombustivel = 0;
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Combustivel acabou, Abasteça");
+                    Console.WriteLine("Sem Combustivel, Abasteça");
                     Console.ResetColor();
                     Console.WriteLine($"Faltam {Percurso.Trajeto - Relatorio.KmPercorrida} KM");
                     Veiculo.EncherTanque();
@@ -140,7 +140,7 @@ namespace Veiculo {
                     }
                 }
 
-                if (km % 100 == 0 && km > 0) {
+                if (km % 100 == 0 && km > 0 && km != Percurso.Trajeto) {
                     int cli = new Random().Next(1, 4);
                     Relatorio.AlteracaoClimatica.AppendLine($"Alteracao Climatica: {km} KM -- Clima: {cli}");
                     Percurso.Clima = cli.ToString();
