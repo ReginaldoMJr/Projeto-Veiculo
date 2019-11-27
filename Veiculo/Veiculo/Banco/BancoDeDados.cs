@@ -71,15 +71,17 @@ namespace Veiculo.Banco {
                             carro.Percurso = agenciaViagem.Percursos.Find(x => x.Id == int.Parse(reader[1].ToString()));
                             Relatorio relatorio = new Relatorio {
                                 CarroPercurso = carro,
-                                KmPercorrida = double.Parse(reader[3].ToString()),
-                                QtdAbastecimentos = uint.Parse(reader[4].ToString()),
-                                QtdCalibragens = uint.Parse(reader[5].ToString()),
-                                LitrosConsumidos = double.Parse(reader[6].ToString()),
-                                DesgastePneu = (StringBuilder)reader[7],
-                                AlteracaoClimatica = (StringBuilder)reader[8]
+                                KmPercorrida = double.Parse(reader[2].ToString()),
+                                QtdAbastecimentos = uint.Parse(reader[3].ToString()),
+                                QtdCalibragens = uint.Parse(reader[4].ToString()),
+                                LitrosConsumidos = double.Parse(reader[5].ToString()),
+                                DesgastePneu = new StringBuilder().Append(reader[6].ToString()),
+                                AlteracaoClimatica = new StringBuilder().Append(reader[7].ToString())
                             };
+                            agenciaViagem.Relatorios.Add(relatorio);
                         }
                     }
+                    reader.Close();
                     connection.Close();
                 }
                 return agenciaViagem;
@@ -104,7 +106,7 @@ namespace Veiculo.Banco {
                     Percurso percurso = new Percurso();
                     CarroPercurso carroPercurso = new CarroPercurso();
                     Relatorio relatorio = new Relatorio();
-                    if (obj.GetType().Equals(veiculo.GetType())) {
+                    if (obj.GetType() == veiculo.GetType()) {
                         veiculo = (Veiculo)obj;
                         var sql = $"insert into Veiculo values ('{veiculo.Placa}','{veiculo.Marca}','{veiculo.Modelo}',{veiculo.Ano},{veiculo.CapacidadeTanque},'{veiculo.TipoCombustivel}',"
                             + $"{veiculo.AutonomiaOriginalG},{veiculo.AutonomiaOriginalA},{veiculo.AutonomiaG},{veiculo.AutonomiaA},{veiculo.QtdCombustivel},{veiculo.QtdGasolina},{veiculo.QtdAlcool},{veiculo.Pneu})";
@@ -113,18 +115,21 @@ namespace Veiculo.Banco {
                     }
                     else if(obj.GetType() == percurso.GetType()) {
                         percurso = (Percurso)obj;
-                        SqlCommand command = new SqlCommand($"insert into Percurso values ({percurso.Id},{percurso.Clima},{percurso.Trajeto})", connection);
+                        var sql = $"insert into Percurso values ({percurso.Id},{percurso.Clima},{percurso.Trajeto})";
+                        SqlCommand command = new SqlCommand(sql, connection);
                         command.ExecuteNonQuery();
                     }
                     else  if(obj.GetType() == carroPercurso.GetType()) {
                         carroPercurso = (CarroPercurso)obj;
-                        SqlCommand command = new SqlCommand($"insert into Carro_Percurso values ('{carroPercurso.Veiculo.Placa}',{carroPercurso.Percurso.Id})", connection);
+                        var sql = $"insert into Carro_Percurso values ('{carroPercurso.Veiculo.Placa}',{carroPercurso.Percurso.Id})";
+                        SqlCommand command = new SqlCommand(sql, connection);
                         command.ExecuteNonQuery();
                     }
                     else if(obj.GetType() == relatorio.GetType()) {
                         relatorio = (Relatorio)obj;
-                        SqlCommand command = new SqlCommand($"insert into Relatorio values ('{relatorio.CarroPercurso.Veiculo.Placa}',{relatorio.CarroPercurso.Percurso.Id},{relatorio.KmPercorrida}"
-                            + $"{relatorio.QtdAbastecimentos},{relatorio.QtdCalibragens},{relatorio.LitrosConsumidos},'{relatorio.DesgastePneu}','{relatorio.AlteracaoClimatica}')", connection);
+                        var sql = $"insert into Relatorio values ('{relatorio.CarroPercurso.Veiculo.Placa}',{relatorio.CarroPercurso.Percurso.Id},{relatorio.KmPercorrida},"
+                            + $"{relatorio.QtdAbastecimentos},{relatorio.QtdCalibragens},{relatorio.LitrosConsumidos},'{relatorio.DesgastePneu}','{relatorio.AlteracaoClimatica}')";
+                        SqlCommand command = new SqlCommand(sql, connection);
                         command.ExecuteNonQuery();
                     }
                     connection.Close();
