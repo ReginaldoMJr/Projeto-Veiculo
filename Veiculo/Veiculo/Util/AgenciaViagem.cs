@@ -84,6 +84,7 @@ namespace Veiculo {
             //Se o tipo for flex
             if (veiculo.TipoCombustivel == "1") {
                 veiculo.Flex = true;
+                veiculo.TipoCombustivel = "Flex";
                 uint result;
                 do {
                     Console.Write("Digite quantos km o veiculo faz por litro de alcool: ");
