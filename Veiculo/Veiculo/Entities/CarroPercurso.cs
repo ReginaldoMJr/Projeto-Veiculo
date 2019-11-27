@@ -10,6 +10,7 @@ namespace Veiculo {
             if (Relatorio == null) {
                 Relatorio = new Relatorio { CarroPercurso = carroPercurso };
                 agenciaViagem.Relatorios.Add(Relatorio);
+                Banco.BancoDeDados.Salvar(Relatorio);
             }
             double MenuDirigir() {
                 string num;

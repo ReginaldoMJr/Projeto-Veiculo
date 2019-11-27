@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Veiculo.Banco;
 
 namespace Veiculo {
     class AgenciaViagem {
@@ -152,6 +153,7 @@ namespace Veiculo {
             }
             while (!Regex.IsMatch(veiculo.Pneu, "^[1-3]{1}$"));
             Veiculos.Add(veiculo);
+            BancoDeDados.Salvar(veiculo);
         }
         public void CadastrarPercurso() {
             Percurso percurso = new Percurso();
@@ -178,6 +180,7 @@ namespace Veiculo {
             while (!Regex.IsMatch(percurso.Clima, "^[123]{1}$"));
 
             Percursos.Add(percurso);
+            BancoDeDados.Salvar(percurso);
         }
         public void CadastrarCarroPercurso() {
             CarroPercurso carroPercurso = new CarroPercurso();
@@ -200,9 +203,8 @@ namespace Veiculo {
             while (percurso == null);
             carroPercurso.Veiculo = veiculo;
             carroPercurso.Percurso = percurso;
-            Veiculos.Remove(veiculo);
-            Percursos.Remove(percurso);
             CarroPercursos.Add(carroPercurso);
+            BancoDeDados.Salvar(carroPercurso);
         }
         public void ExibirVeiculos() {
             Console.ForegroundColor = ConsoleColor.Cyan;
